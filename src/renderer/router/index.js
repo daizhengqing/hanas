@@ -7,7 +7,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'landing-page',
+      name: '首页',
       component: require('@/components/LandingPage').default
     },
     {

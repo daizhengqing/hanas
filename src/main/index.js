@@ -1,6 +1,7 @@
 'use strict'
 
 import { app, BrowserWindow } from 'electron'
+import HANAs from './app/index'
 
 /**
  * Set `__static` path to static files in production
@@ -32,6 +33,10 @@ function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+  const hanas = new HANAs(mainWindow)
+
+  hanas.init()
 }
 
 app.on('ready', createWindow)
