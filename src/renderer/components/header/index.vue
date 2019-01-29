@@ -23,6 +23,10 @@ export default {
     this.$renderer.on('fullScreenChange', isFullScreen => {
       this.fullScreen = isFullScreen
     })
+
+    this.$renderer.on('window', (evt, arg) => {
+      console.dir(arg)
+    })
   },
   methods: {
     onMinButtonClick () {

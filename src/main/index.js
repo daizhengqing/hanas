@@ -1,6 +1,10 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import {
+  app,
+  BrowserWindow,
+  ipcMain
+} from 'electron'
 import HANAs from './app/index'
 
 /**
@@ -34,7 +38,12 @@ function createWindow () {
     mainWindow = null
   })
 
-  const hanas = new HANAs(mainWindow)
+  ipcMain.on('min-window', () => { mainWindow.minimize() })
+  ipcMain.on('full-window', () => { mainWindow.maximize() })
+  ipcMain.on('exit-full-window', () => { mainWindow.unmaximize() })
+  ipcMain.on('close', () => { mainWindow.close() })
+
+  const hanas = new HANAs()
 
   hanas.init()
 }
