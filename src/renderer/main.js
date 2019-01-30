@@ -9,11 +9,6 @@ import store from './store'
 import { ipcRenderer } from 'electron'
 
 import 'muse-ui/dist/muse-ui.css'
-import theme from 'muse-ui/lib/theme'
-theme.add('theme', {
-}, 'light')
-
-theme.use('theme')
 
 Vue.use(museUI)
 

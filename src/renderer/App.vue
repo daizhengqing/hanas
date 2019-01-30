@@ -55,7 +55,7 @@
   }
 
   #app-container {
-    width: calc(100% - #{$app-aside-width})
+    width: calc(100% - #{$app-aside-width * 2})
   }
 </style>
 
