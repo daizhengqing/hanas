@@ -25,9 +25,11 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
+    width: 950,
+    minWidth: 950,
+    height: 600,
+    minHeight: 600,
     useContentSize: true,
-    width: 1000,
     center: true,
     frame: false
   })
@@ -38,10 +40,18 @@ function createWindow () {
     mainWindow = null
   })
 
+  mainWindow.on('maximize', () => {
+    mainWindow.webContents.send('maximize-window')
+  })
+
+  mainWindow.on('unmaximize', () => {
+    mainWindow.webContents.send('unmaximize-window')
+  })
+
   ipcMain.on('min-window', () => { mainWindow.minimize() })
   ipcMain.on('full-window', () => { mainWindow.maximize() })
   ipcMain.on('exit-full-window', () => { mainWindow.unmaximize() })
-  ipcMain.on('close', () => { mainWindow.close() })
+  ipcMain.on('close-window', () => { mainWindow.close() })
 
   const hanas = new HANAs()
 

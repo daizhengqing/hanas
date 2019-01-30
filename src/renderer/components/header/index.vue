@@ -6,7 +6,7 @@
       mu-button.app-operation-button(flat @click="onMinButtonClick")
         i.iconfont.icon-minus
       mu-button.app-operation-button(flat @click="onFullScreenButtonClick")
-        i.iconfont.icon-fullscreen
+        i(:class="['iconfont', !fullScreen ? 'icon-fullscreen' : 'icon-fullscreen-exit']")
       mu-button.app-operation-button(flat @click="onCloseButtonClick")
         i.iconfont.icon-close
 </template>
@@ -20,12 +20,12 @@ export default {
     }
   },
   mounted () {
-    this.$renderer.on('fullScreenChange', isFullScreen => {
-      this.fullScreen = isFullScreen
+    this.$renderer.on('maximize-window', (evt, arg) => {
+      this.fullScreen = true
     })
 
-    this.$renderer.on('window', (evt, arg) => {
-      console.dir(arg)
+    this.$renderer.on('unmaximize-window', (evt, arg) => {
+      this.fullScreen = false
     })
   },
   methods: {
@@ -33,9 +33,7 @@ export default {
       this.$renderer.send('min-window')
     },
     onFullScreenButtonClick () {
-      this.fullScreen ? this.$renderer.send('full-window') : this.$renderer.send('exit-full-window')
-
-      this.fullScreen = !this.fullScreen
+      this.fullScreen ? this.$renderer.send('exit-full-window') : this.$renderer.send('full-window')
     },
     onCloseButtonClick () {
       this.$renderer.send('close-window')
@@ -74,7 +72,7 @@ export default {
     .app-name {
       width: $app-side-width;
       text-align: left;
-      padding-left: 20px;
+      padding-left: 16px;
       font-size: 17px;
       letter-spacing: 1px;
     }

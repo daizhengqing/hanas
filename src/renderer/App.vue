@@ -1,14 +1,19 @@
 <template lang="pug">
   #app
     app-header
-    router-view
+    #app-layout
+      #app-aside
+        app-aside
+      #app-container
+        router-view
 </template>
 
 <script>
   import appHeader from './components/header/index'
+  import appAside from './components/aside'
   export default {
     name: 'hanas',
-    components: { appHeader }
+    components: { appHeader, appAside }
   }
 </script>
 
@@ -31,6 +36,26 @@
     background-size: cover;
     background-blend-mode: darken;
     font-family: 'fzzy';
+  }
+
+  #app-layout {
+    height: calc(100% - 36px);
+  }
+
+  #app-aside, #app-container {
+    height: 100%;
+    display: inline-block;
+    vertical-align: bottom;
+  }
+
+  $app-aside-width: 85px;
+
+  #app-aside {
+    width: $app-aside-width;
+  }
+
+  #app-container {
+    width: calc(100% - #{$app-aside-width})
   }
 </style>
 
