@@ -4,7 +4,7 @@ import museUI from 'muse-ui'
 
 import App from './App'
 import router from './router'
-import store from './store'
+import Store from './store'
 
 import { ipcRenderer } from 'electron'
 
@@ -15,6 +15,7 @@ Vue.use(museUI)
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 
 Vue.http = Vue.prototype.$http = axios
+Vue.store = Vue.prototype.$store = new Store()
 Vue.renderer = Vue.prototype.$renderer = ipcRenderer
 
 Vue.config.productionTip = false
@@ -23,6 +24,5 @@ Vue.config.productionTip = false
 new Vue({
   components: { App },
   router,
-  store,
   template: '<App/>'
 }).$mount('#app')

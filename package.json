@@ -27,9 +27,7 @@
     "muse-ui": "^3.0.1",
     "vue": "^2.5.16",
     "vue-electron": "^1.0.6",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.0.1",
-    "vuex-electron": "^1.0.0"
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "ajv": "^6.5.0",

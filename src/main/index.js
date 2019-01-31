@@ -53,7 +53,7 @@ function createWindow () {
   ipcMain.on('exit-full-window', () => { mainWindow.unmaximize() })
   ipcMain.on('close-window', () => { mainWindow.close() })
 
-  const hanas = new HANAs()
+  const hanas = new HANAs(mainWindow)
 
   hanas.init()
 }

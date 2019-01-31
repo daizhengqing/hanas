@@ -14,9 +14,21 @@
         keyword: ''
       }
     },
+    mounted () {
+      this.$renderer.on('search-complete', data => {
+        console.log(666666666666666666666, data)
+      })
+    },
     methods: {
-      onSearch () {
-        this.$renderer.send('search-comic', { keyword: this.keyword })
+      async onSearch () {
+        const params = {
+          keyword: this.keyword,
+          from: ['dmzj']
+        }
+
+        const res = await this.$renderer.sendSync('search-comic', params)
+
+        console.log(res)
       }
     }
   }
@@ -52,7 +64,7 @@
 
     /deep/ input::-webkit-input-placeholder {
       color: rgba(255, 255, 255, .9);
-      font-size: 14px;
+      font-size: 13px;
       text-align: center;
     }
 

@@ -1,13 +1,40 @@
-import EventBus from './eventBus.js'
+import Router from './router.js'
+import {
+  ipcMain
+} from 'electron'
 
 export default class App {
-  constructor () {
-    this.test = 233
+  constructor (mainWindow) {
+    this.mainWindow = mainWindow
 
-    this.eventBus = new EventBus(this)
+    this.$main = ipcMain
+
+    this.service = {}
+    this.router = new Router(this)
   }
 
-  init () {
-    this.eventBus.init()
+  /**
+   * 初始化
+   */
+  async init () {
+    await this.loadService()
+
+    this.router.init()
+  }
+
+  /**
+   * 加载服务类
+   */
+  async loadService () {
+    const fs = require('fs')
+    const path = require('path')
+
+    const pathCollection = await fs.readdirSync(path.join(__dirname, './service'))
+
+    pathCollection.forEach(filename => {
+      const Service = require(`./service/${filename}`).default
+
+      this.service[filename.replace('.js', '')] = new Service(this)
+    })
   }
 }
