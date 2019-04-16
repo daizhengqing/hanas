@@ -16,6 +16,16 @@ export default new Router({
       component: require('@/pages/BookShelf').default
     },
     {
+      path: '/download',
+      name: '下载',
+      component: require('@/pages/Download').default
+    },
+    {
+      path: '/setting',
+      name: '设置',
+      component: require('@/pages/Setting').default
+    },
+    {
       path: '*',
       redirect: '/'
     }
