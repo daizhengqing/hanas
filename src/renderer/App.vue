@@ -48,14 +48,14 @@
     vertical-align: bottom;
   }
 
-  $app-aside-width: 85px;
+  $app-aside-width: 144px;
 
   #app-aside {
     width: $app-aside-width;
   }
 
   #app-container {
-    width: calc(100% - #{$app-aside-width * 2})
+    width: calc(100% - #{$app-aside-width})
   }
 </style>
 

@@ -36,8 +36,11 @@
 
 <style lang="scss" scoped>
   .container {
+    width: calc(100% - 144px);
     height: 100%;
     position: relative;
+    padding: 0;
+    margin: 0;
 
     .search-input {
       text-align: center;
