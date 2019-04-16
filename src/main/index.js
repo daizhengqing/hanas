@@ -5,6 +5,7 @@ import {
   BrowserWindow,
   ipcMain
 } from 'electron'
+import config from './index.config.js'
 import HANAs from './app/index'
 
 /**
@@ -24,15 +25,7 @@ function createWindow () {
   /**
    * Initial window options
    */
-  mainWindow = new BrowserWindow({
-    width: 950,
-    minWidth: 950,
-    height: 600,
-    minHeight: 600,
-    useContentSize: true,
-    center: true,
-    frame: false
-  })
+  mainWindow = new BrowserWindow(config)
 
   mainWindow.loadURL(winURL)
 
