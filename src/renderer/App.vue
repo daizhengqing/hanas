@@ -9,8 +9,8 @@
 </template>
 
 <script>
-  import appHeader from './components/header/index'
-  import appAside from './components/aside'
+  import appHeader from './components/Header/index'
+  import appAside from './components/Aside'
   export default {
     name: 'hanas',
     components: { appHeader, appAside }

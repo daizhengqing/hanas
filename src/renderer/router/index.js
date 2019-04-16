@@ -8,7 +8,12 @@ export default new Router({
     {
       path: '/',
       name: '首页',
-      component: require('@/components/home').default
+      component: require('@/pages/Home').default
+    },
+    {
+      path: '/bookshelf',
+      name: '书架',
+      component: require('@/pages/BookShelf').default
     },
     {
       path: '*',
