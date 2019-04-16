@@ -54,6 +54,10 @@
       margin: 0 !important;
     }
 
+    /deep/ .mu-input-line {
+      background-color: rgba(0,0,0,0);
+    }
+
     /deep/ .mu-input__focus {
       color: rgba(255, 255, 255, .8) !important;
     }
