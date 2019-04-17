@@ -55,10 +55,10 @@ export default {
       }
     }
 
-    /deep/ .mu-item:hover {
+    /deep/ .mu-item span:hover {
       cursor: pointer;
 
-      i {
+      & + i {
         display: inline-block;
       }
     }
