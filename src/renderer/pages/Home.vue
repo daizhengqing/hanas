@@ -37,6 +37,7 @@
 <style lang="scss" scoped>
   .container {
     width: calc(100% - 144px);
+    max-width: none;
     height: 100%;
     position: relative;
     padding: 0;
