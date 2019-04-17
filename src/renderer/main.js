@@ -10,6 +10,8 @@ import { ipcRenderer } from 'electron'
 
 import 'muse-ui/dist/muse-ui.css'
 
+import './assets/index.scss'
+
 Vue.use(museUI)
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
