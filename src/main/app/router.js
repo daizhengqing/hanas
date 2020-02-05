@@ -8,6 +8,7 @@ export default class Router {
    * 初始化
    */
   init () {
-    ipcMain.on('search-comic', (evt, arg) => { this.app.service.search.search(evt, arg) })
+    ipcMain.on('searchComic', (evt, arg) => { this.app.service.search.search(evt, arg) })
+    ipcMain.on('getCover', (evt, arg) => { this.app.service.images.cover(evt, arg) })
   }
 }

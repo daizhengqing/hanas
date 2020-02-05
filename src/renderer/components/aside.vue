@@ -3,7 +3,7 @@
     mu-list
       mu-list-item(@click.native="onItemChange('home')")
         mu-list-item-title
-          span 首页
+          span 主页
           i.iconfont.icon-flower
       mu-list-item(@click.native="onItemChange('bookshelf')")
         mu-list-item-title

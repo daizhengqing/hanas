@@ -1,30 +1,20 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add museui
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add cheerio
 
 PATH: 
-  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\HANAs\bin;C:\workspace\bmjk-sheet-pro\graphicsmagick;C:\workspace\bmjk-sheet-pro\ImageMagick;C:\program files\graphicsmagick-1.3.31-q16;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\Yarn\bin;C:\Users\HANAs\AppData\Local\Programs\Python\Python37\Scripts;C:\Users\HANAs\AppData\Local\Programs\Python\Python37;C:\Users\HANAs\AppData\Local\Microsoft\WindowsApps;C:\Users\HANAs\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\HANAs\AppData\Roaming\npm;C:\Users\HANAs\AppData\Local\Yarn\bin;C:\workspace\bmjk-sheet-pro\GraphicsMagick;C:\Users\HANAs\AppData\Local\Programs\Fiddler
+  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Users\ddzq7\AppData\Local\Microsoft\WindowsApps;;C:\Users\ddzq7\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\ddzq7\AppData\Roaming\npm;C:\Users\ddzq7\AppData\Local\Yarn\bin
 
 Yarn version: 
-  1.12.3
+  1.19.1
 
 Node version: 
-  10.14.1
+  12.13.1
 
 Platform: 
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/museui: Not found
-      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:65003:18)
-      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:129018:22)
-      at Request.emit (events.js:182:13)
-      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:129990:10)
-      at Request.emit (events.js:182:13)
-      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:129912:12)
-      at Object.onceWrapper (events.js:273:13)
-      at IncomingMessage.emit (events.js:187:15)
-      at endReadableNT (_stream_readable.js:1094:12)
-      at process._tickCallback (internal/process/next_tick.js:63:19)
+  Error: EPERM: operation not permitted, unlink 'E:\workspace\hanas\node_modules\_node-sass@4.13.0@node-sass\vendor\win32-x64-72\binding.node'
 
 npm manifest: 
   {
@@ -53,12 +43,10 @@ npm manifest:
     },
     "dependencies": {
       "axios": "^0.18.0",
-      "pug": "^2.0.3",
+      "muse-ui": "^3.0.1",
       "vue": "^2.5.16",
       "vue-electron": "^1.0.6",
-      "vue-router": "^3.0.1",
-      "vuex": "^3.0.1",
-      "vuex-electron": "^1.0.0"
+      "vue-router": "^3.0.1"
     },
     "devDependencies": {
       "ajv": "^6.5.0",
@@ -97,6 +85,8 @@ npm manifest:
       "multispinner": "^0.2.1",
       "node-loader": "^0.6.0",
       "node-sass": "^4.9.2",
+      "pug": "^2.0.3",
+      "pug-plain-loader": "^1.0.0",
       "sass-loader": "^7.0.3",
       "style-loader": "^0.21.0",
       "url-loader": "^1.0.1",
@@ -1769,6 +1759,11 @@ Lockfile:
       raw-body "2.3.3"
       type-is "~1.6.16"
   
+  body-scroll-lock@^2.5.7:
+    version "2.6.1"
+    resolved "https://registry.yarnpkg.com/body-scroll-lock/-/body-scroll-lock-2.6.1.tgz#3782ff37404886faaee366968ceee40c3964d8f2"
+    integrity sha512-fsDsq10+BJrk/+eGADqxspyZpGiKSh3dK8ByE6KuDK0REmPB99U05p1t9xVTAM9J6j9PJGm6W/W+HsCPnOFj+Q==
+  
   bonjour@^3.5.0:
     version "3.5.0"
     resolved "https://registry.yarnpkg.com/bonjour/-/bonjour-3.5.0.tgz#8e890a183d8ee9a2393b3844c691a42bcf7bc9f5"
@@ -2501,17 +2496,6 @@ Lockfile:
       readable-stream "^2.2.2"
       typedarray "^0.0.6"
   
-  conf@^2.0.0:
-    version "2.2.0"
-    resolved "https://registry.yarnpkg.com/conf/-/conf-2.2.0.tgz#ee282efafc1450b61e205372041ad7d866802d9a"
-    integrity sha512-93Kz74FOMo6aWRVpAZsonOdl2I57jKtHrNmxhumehFQw4X8Sk37SohNY11PG7Q8Okta+UnrVaI006WLeyp8/XA==
-    dependencies:
-      dot-prop "^4.1.0"
-      env-paths "^1.0.0"
-      make-dir "^1.0.0"
-      pkg-up "^2.0.0"
-      write-file-atomic "^2.3.0"
-  
   connect-history-api-fallback@^1.3.0:
     version "1.6.0"
     resolved "https://registry.yarnpkg.com/connect-history-api-fallback/-/connect-history-api-fallback-1.6.0.tgz#8b32089359308d111115d81cad3fceab888f97bc"
@@ -2855,6 +2839,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/date-now/-/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
     integrity sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
   
+  dayjs@^1.6.5:
+    version "1.8.0"
+    resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.8.0.tgz#507963ac3023f4b1f9f399a278356946fc4c9ae9"
+    integrity sha512-2ofInmfMKLLR5R02q3WEUuDt86UK33VQQTaEeJudF+C04ZUaekCP3VpB0NJPiyPDCGJWq9XYhHX2AemdxA8+dg==
+  
   de-indent@^1.0.2:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/de-indent/-/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
@@ -2932,11 +2921,6 @@ Lockfile:
     version "0.1.3"
     resolved "https://registry.yarnpkg.com/deep-is/-/deep-is-0.1.3.tgz#b369d6fb5dbc13eecf524f91b070feedc357cf34"
     integrity sha1-s2nW+128E+7PUk+RsHD+7cNXzzQ=
-  
-  deepmerge@^2.1.1:
-    version "2.2.1"
-    resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-2.2.1.tgz#5d3ff22a01c00f645405a2fbc17d0778a1801170"
-    integrity sha512-R9hc1Xa/NOBi9WRVUWg19rl1UB7Tt4kuPd+thNJgFZoxXsTz7ncaPaeIm+40oSGuP33DfMb4sZt1QIGiJzC4EA==
   
   default-gateway@^2.6.0:
     version "2.7.2"
@@ -3181,13 +3165,6 @@ Lockfile:
     dependencies:
       no-case "^2.2.0"
   
-  dot-prop@^4.1.0:
-    version "4.2.0"
-    resolved "https://registry.yarnpkg.com/dot-prop/-/dot-prop-4.2.0.tgz#1f19e0c2e1aa0e32797c49799f2837ac6af69c57"
-    integrity sha512-tUMXrxlExSW6U2EXiiKGSBVdYgtV8qlHL+C10TsW4PURY/ic+eaysnSkwB4kA/mBlCyy/IKDJ+Lc3wbWeaXtuQ==
-    dependencies:
-      is-obj "^1.0.0"
-  
   duplexify@^3.4.2, duplexify@^3.6.0:
     version "3.6.1"
     resolved "https://registry.yarnpkg.com/duplexify/-/duplexify-3.6.1.tgz#b1a7a29c4abfd639585efaecce80d666b1e34125"
@@ -3329,13 +3306,6 @@ Lockfile:
       rimraf "^2.6.1"
       spawn-rx "^2.0.10"
       yargs "^7.0.2"
-  
-  electron-store@^2.0.0:
-    version "2.0.0"
-    resolved "https://registry.yarnpkg.com/electron-store/-/electron-store-2.0.0.tgz#1035cca2a95409d1f54c7466606345852450d64a"
-    integrity sha512-1WCFYHsYvZBqDsoaS0Relnz0rd81ZkBAI0Fgx7Nq2UWU77rSNs1qxm4S6uH7TCZ0bV3LQpJFk7id/is/ZgoOPA==
-    dependencies:
-      conf "^2.0.0"
   
   electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.47:
     version "1.3.107"
@@ -5017,11 +4987,6 @@ Lockfile:
     dependencies:
       kind-of "^3.0.2"
   
-  is-obj@^1.0.0:
-    version "1.0.1"
-    resolved "https://registry.yarnpkg.com/is-obj/-/is-obj-1.0.1.tgz#3e4729ac1f5fde025cd7d83a896dab9f4f67db0f"
-    integrity sha1-PkcprB9f3gJc19g6iW2rn09n2w8=
-  
   is-path-cwd@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/is-path-cwd/-/is-path-cwd-1.0.0.tgz#d225ec23132e89edd38fda767472e62e65f1106d"
@@ -5311,6 +5276,11 @@ Lockfile:
     version "0.2.2"
     resolved "https://registry.yarnpkg.com/keyboardevents-areequal/-/keyboardevents-areequal-0.2.2.tgz#88191ec738ce9f7591c25e9056de928b40277194"
     integrity sha512-Nv+Kr33T0mEjxR500q+I6IWisOQ0lK1GGOncV0kWE6n4KFmpcu7RUX5/2B0EUtX51Cb0HjZ9VJsSY3u4cBa0kw==
+  
+  keycode@^2.1.9:
+    version "2.2.0"
+    resolved "https://registry.yarnpkg.com/keycode/-/keycode-2.2.0.tgz#3d0af56dc7b8b8e5cba8d0a97f107204eec22b04"
+    integrity sha1-PQr1bce4uOXLqNCpfxByBO7CKwQ=
   
   killable@^1.0.0:
     version "1.0.1"
@@ -6046,6 +6016,17 @@ Lockfile:
       lodash.merge "^3.3.2"
       log-update "^1.0.2"
   
+  muse-ui@^3.0.1:
+    version "3.0.1"
+    resolved "https://registry.yarnpkg.com/muse-ui/-/muse-ui-3.0.1.tgz#6c22cc424f3573b7c8ddcc5a662d40f2e4c8caea"
+    integrity sha512-q1G6PbdndD/EaYH7gPodFQ4PYtQ0Ls+pL16kGj4sjjWonvYT2SMg7gFf73OziQS7plqmdH+qiIhR1YMZbjAMDA==
+    dependencies:
+      body-scroll-lock "^2.5.7"
+      dayjs "^1.6.5"
+      keycode "^2.1.9"
+      normalize-wheel "^1.0.1"
+      resize-observer-polyfill "^1.5.0"
+  
   mute-stream@0.0.7:
     version "0.0.7"
     resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
@@ -6282,6 +6263,11 @@ Lockfile:
       prepend-http "^1.0.0"
       query-string "^4.1.0"
       sort-keys "^1.0.0"
+  
+  normalize-wheel@^1.0.1:
+    version "1.0.1"
+    resolved "https://registry.yarnpkg.com/normalize-wheel/-/normalize-wheel-1.0.1.tgz#aec886affdb045070d856447df62ecf86146ec45"
+    integrity sha1-rsiGr/2wRQcNhWRH32Ls+GFG7EU=
   
   npm-bundled@^1.0.1:
     version "1.0.5"
@@ -6778,13 +6764,6 @@ Lockfile:
     integrity sha512-/E57AYkoeQ25qkxMj5PBOVgF8Kiu/h7cYS30Z5+R7WaiCCBfLq58ZI/dSeaEKb9WVJV5n/03QwrN3IeWIFllvw==
     dependencies:
       find-up "^3.0.0"
-  
-  pkg-up@^2.0.0:
-    version "2.0.0"
-    resolved "https://registry.yarnpkg.com/pkg-up/-/pkg-up-2.0.0.tgz#c819ac728059a461cab1c3889a2be3c49a004d7f"
-    integrity sha1-yBmscoBZpGHKscOImivjxJoATX8=
-    dependencies:
-      find-up "^2.1.0"
   
   plist@^2.0.0:
     version "2.1.0"
@@ -7307,6 +7286,13 @@ Lockfile:
       pug-error "^1.3.2"
       token-stream "0.0.1"
   
+  pug-plain-loader@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/pug-plain-loader/-/pug-plain-loader-1.0.0.tgz#cef2a984c90251882109ec2d417a6b433aa6b42a"
+    integrity sha512-mDfq/qvJJ0xdug38mZ1ObW0BQTx9kAHnKqotXC+C00XQkKmsWaMe90JUg/kN4lS6MU7tpVsMZ+rmcnBSPfDtHA==
+    dependencies:
+      loader-utils "^1.1.0"
+  
   pug-runtime@^2.0.4:
     version "2.0.4"
     resolved "https://registry.yarnpkg.com/pug-runtime/-/pug-runtime-2.0.4.tgz#e178e1bda68ab2e8c0acfc9bced2c54fd88ceb58"
@@ -7723,6 +7709,11 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
     integrity sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8=
+  
+  resize-observer-polyfill@^1.5.0:
+    version "1.5.1"
+    resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+    integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
   
   resolve-cwd@^2.0.0:
     version "2.0.0"
@@ -9081,19 +9072,6 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.22.tgz#3bf88041af08b8539c37b268b70ca79245e9cc30"
     integrity sha512-pxY3ZHlXNJMFQbkjEgGVMaMMkSV1ONpz+4qB55kZuJzyJOhn6MSy/YZdzhdnumegNzVTL/Dn3Pp4UrVBYt1j/g==
   
-  vuex-electron@^1.0.0:
-    version "1.0.3"
-    resolved "https://registry.yarnpkg.com/vuex-electron/-/vuex-electron-1.0.3.tgz#c8ce0fd06ed9d3beb8881bce39bf76c9fcdc5611"
-    integrity sha512-fPv6nQa3yllKHy+8GT/xBMLw95slnLQRAV7Rddr1rNwc369vZvT6j9mQs7easwWgdk/Cnqqcq2Uay1SQE9KahQ==
-    dependencies:
-      deepmerge "^2.1.1"
-      electron-store "^2.0.0"
-  
-  vuex@^3.0.1:
-    version "3.1.0"
-    resolved "https://registry.yarnpkg.com/vuex/-/vuex-3.1.0.tgz#634b81515cf0cfe976bd1ffe9601755e51f843b9"
-    integrity sha512-mdHeHT/7u4BncpUZMlxNaIdcN/HIt1GsGG5LKByArvYG/v6DvHcOxvDCts+7SRdCoIRGllK8IMZvQtQXLppDYg==
-  
   watchpack@^1.5.0:
     version "1.6.0"
     resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.6.0.tgz#4bc12c2ebe8aa277a71f1d3f14d685c7b446cd00"
@@ -9330,15 +9308,6 @@ Lockfile:
     version "1.0.2"
     resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
     integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
-  
-  write-file-atomic@^2.3.0:
-    version "2.4.2"
-    resolved "https://registry.yarnpkg.com/write-file-atomic/-/write-file-atomic-2.4.2.tgz#a7181706dfba17855d221140a9c06e15fcdd87b9"
-    integrity sha512-s0b6vB3xIVRLWywa6X9TOMA7k9zio0TMOsl9ZnDkliA/cfJlpHXAscj0gbHVJiTdIuAYpIyqS5GW91fqm6gG5g==
-    dependencies:
-      graceful-fs "^4.1.11"
-      imurmurhash "^0.1.4"
-      signal-exit "^3.0.2"
   
   write@^0.2.1:
     version "0.2.1"

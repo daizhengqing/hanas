@@ -6,14 +6,16 @@
         app-aside
       #app-container
         router-view
+    app-loading
 </template>
 
 <script>
   import appHeader from './components/Header/index'
   import appAside from './components/Aside'
+  import appLoading from './components/Loading'
   export default {
     name: 'hanas',
-    components: { appHeader, appAside }
+    components: { appHeader, appAside, appLoading }
   }
 </script>
 

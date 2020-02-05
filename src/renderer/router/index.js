@@ -7,7 +7,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: '首页',
+      name: '主页',
       component: require('@/pages/Home').default
     },
     {
