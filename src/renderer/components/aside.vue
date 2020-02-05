@@ -9,14 +9,14 @@
       //-   mu-list-item-title
       //-     span 书架
       //-     i.iconfont.icon-flower
-      mu-list-item(@click.native="onItemChange('download')")
-        mu-list-item-title
-          span 下载
-          i.iconfont.icon-flower
-      mu-list-item(@click.native="onItemChange('setting')")
-        mu-list-item-title
-          span 设置
-          i.iconfont.icon-flower
+      //- mu-list-item(@click.native="onItemChange('download')")
+      //-   mu-list-item-title
+      //-     span 下载
+      //-     i.iconfont.icon-flower
+      //- mu-list-item(@click.native="onItemChange('setting')")
+      //-   mu-list-item-title
+      //-     span 设置
+      //-     i.iconfont.icon-flower
 </template>
 
 <script>

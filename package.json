@@ -1,9 +1,9 @@
 {
   "name": "hanas",
   "productName": "hanas",
-  "version": "0.0.1",
+  "version": "beat 0.0.1",
   "author": "daizq <502941254@qq.com>",
-  "description": "An electron-vue project",
+  "description": "一款漫画采集器",
   "license": null,
   "main": "./dist/electron/main.js",
   "scripts": {
