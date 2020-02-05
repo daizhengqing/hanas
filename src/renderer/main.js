@@ -1,7 +1,9 @@
 import Vue from 'vue'
-import axios from 'axios'
-import museUI from 'muse-ui'
+import Axios from 'Axios'
+import MuseUI from 'muse-ui'
 import VueLazyLoad from 'vue-lazyload'
+import Toasted from 'vue-toasted'
+import VueContextMenu from '@ddzq789/vue-context-menu'
 
 import App from './App'
 import router from './router'
@@ -13,14 +15,19 @@ import 'muse-ui/dist/muse-ui.css'
 
 import './assets/index.scss'
 
-Vue.use(museUI)
+Vue.use(Toasted, {
+  position: 'bottom-right',
+  duration: 2000
+})
+Vue.use(MuseUI)
+Vue.use(VueContextMenu)
 Vue.use(VueLazyLoad, {
   lazyComponent: true
 })
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 
-Vue.http = Vue.prototype.$http = axios
+Vue.http = Vue.prototype.$http = Axios
 Vue.renderer = Vue.prototype.$renderer = ipcRenderer
 
 Vue.config.productionTip = false

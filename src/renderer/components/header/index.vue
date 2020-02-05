@@ -1,13 +1,15 @@
 <template lang="pug">
   .app-header
-    .app-name HANAs
-    .page-title {{$route.name}}
-    .app-operation
-      mu-button.app-operation-button(flat @click="onMinButtonClick")
+    .header-left
+      slot(name="left")
+    .header-center
+      slot(name="center")
+    .header-right
+      mu-button.button(flat @click="onMinButtonClick")
         i.iconfont.icon-minus
-      mu-button.app-operation-button(flat @click="onFullScreenButtonClick")
+      mu-button.button(flat @click="onFullScreenButtonClick")
         i(:class="['iconfont', !fullScreen ? 'icon-fullscreen' : 'icon-fullscreen-exit']")
-      mu-button.app-operation-button(flat @click="onCloseButtonClick")
+      mu-button.button(flat @click="onCloseButtonClick")
         i.iconfont.icon-close
 </template>
 
@@ -69,7 +71,7 @@ export default {
       color: $font-color;
     }
 
-    .app-name {
+    .header-left {
       width: $app-side-width;
       text-align: left;
       padding-left: 16px;
@@ -77,14 +79,15 @@ export default {
       letter-spacing: 1px;
     }
 
-    .page-title {
+    .header-center {
       width: calc(100% - #{$app-side-width * 2});
     }
 
-    .app-operation {
+    .header-right {
       width: $app-side-width;
+    }
 
-      &-button {
+    .button {
         @extend %no-drag;
         min-width: auto;
         color: $font-color;
@@ -93,7 +96,6 @@ export default {
           color: $font-color;
         }
       }
-    }
   }
 </style>
 

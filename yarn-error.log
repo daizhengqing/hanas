@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add cheerio
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add vue-toasted
 
 PATH: 
-  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Users\ddzq7\AppData\Local\Microsoft\WindowsApps;;C:\Users\ddzq7\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\ddzq7\AppData\Roaming\npm;C:\Users\ddzq7\AppData\Local\Yarn\bin
+  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\dotnet\;C:\Users\ddzq7\AppData\Local\Microsoft\WindowsApps;C:\Users\ddzq7\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\ddzq7\AppData\Roaming\npm;C:\Users\ddzq7\AppData\Local\Yarn\bin
 
 Yarn version: 
   1.19.1
@@ -43,10 +43,15 @@ npm manifest:
     },
     "dependencies": {
       "axios": "^0.18.0",
+      "cheerio": "^1.0.0-rc.3",
       "muse-ui": "^3.0.1",
+      "muse-ui-toast": "^0.3.0",
       "vue": "^2.5.16",
       "vue-electron": "^1.0.6",
-      "vue-router": "^3.0.1"
+      "vue-lazyload": "^1.3.3",
+      "vue-multiple-scrollbar": "^1.0.4",
+      "vue-router": "^3.0.1",
+      "vuex": "^3.1.2"
     },
     "devDependencies": {
       "ajv": "^6.5.0",

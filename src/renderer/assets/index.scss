@@ -46,3 +46,8 @@ $app-aside-width: 144px;
 #app-container {
   width: calc(100% - #{$app-aside-width})
 }
+
+.mu-dialog-wrapper {
+  top: 36px !important;
+  z-index: 99 !important;
+}

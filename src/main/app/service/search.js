@@ -7,16 +7,18 @@ export default class Search {
   }
 
   async search (evt, arg) {
-    const res = await Promise.all(arg.from.map(item => this[item](arg.keyword, arg.page)))
+    try {
+      const data = await Promise.all(arg.from.map(item => this[item](arg.keyword, arg.page)))
 
-    evt.returnValue = {
-      status: 'success',
-      request: {
-        params: arg
-      },
-      response: {
-        data: res
-      }
+      this.app.mainWindow.webContents.send('search_complete', {
+        data,
+        state: true
+      })
+    } catch (err) {
+      this.app.mainWindow.webContents.send('search_complete', {
+        state: false,
+        message: err.message
+      })
     }
   }
 
@@ -37,6 +39,8 @@ export default class Search {
 
       const data = JSON.parse(res.data.match(/\[.*\]/gm))
 
+      if (!data) return []
+
       return data.map(item => {
         return Object.assign(item, {
           name: item.comic_name,
@@ -46,7 +50,7 @@ export default class Search {
         })
       })
     } catch (err) {
-      console.log(err)
+      throw new Error(err)
     }
   }
 }

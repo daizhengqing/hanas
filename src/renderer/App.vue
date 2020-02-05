@@ -1,21 +1,30 @@
 <template lang="pug">
   #app
-    app-header
+    AppHeader
+      div(slot="left") HANAs
+      div(slot="center") {{ $route.name }}
     #app-layout
       #app-aside
-        app-aside
+        AppAside
       #app-container
-        router-view
-    app-loading
+        RouterView
+    AppLoading
+    Reading(v-if="isReading")
 </template>
 
 <script>
-  import appHeader from './components/Header/index'
-  import appAside from './components/Aside'
-  import appLoading from './components/Loading'
+  import AppHeader from './components/Header/index'
+  import AppAside from './components/Aside'
+  import AppLoading from './components/Loading'
+  import Reading from './components/Reading'
   export default {
     name: 'hanas',
-    components: { appHeader, appAside, appLoading }
+    components: { AppHeader, AppAside, AppLoading, Reading },
+    computed: {
+      isReading () {
+        return this.$store.state.app.reading
+      }
+    }
   }
 </script>
 

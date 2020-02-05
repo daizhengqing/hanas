@@ -4,51 +4,72 @@
       mu-text-field(type="text" v-model="keyword" placeholder="点击这里输入关键词搜索" @keydown.enter.native="onSearch")
       .search-button(v-show="keyword !== '' || list.length > 0")
         mu-button(flat @click="onSearch") 搜索
-      .search-result(v-if="list.length > 0")
-        .item(v-for="item in list" :key="item.url")
-          .cover-container
-            img(v-lazy="`/static/image/logo.png`" :data-cover="item.cover" :data-fromType="item.fromType")
-          span {{ item.name }}
+      Scrollbar
+        .search-result(v-if="list.length > 0")
+          .item(v-for="item in list" :key="item.url" @click="onClick(item)")
+            .cover-container
+              img(v-lazy="`/static/image/logo.png`" :id="generateId()" :data-cover="item.cover" :data-fromType="item.fromType")
+            span {{ item.name }}
+    Details(:isShow.sync="isShow" :selected="selected" @close="isShow = false")
 </template>
 
 <script>
+  import Scrollbar from 'vue-multiple-scrollbar'
+  import Details from './Details'
+  import shortid from 'shortid'
+
   export default {
     name: 'home',
+    components: { Scrollbar, Details },
     data () {
       return {
         keyword: '',
-        data: {}
+        list: [],
+        isShow: false,
+        selected: null,
+        store: []
       }
     },
-    computed: {
-      list () {
-        if (this.data.response) {
-          const res = []
-
-          this.data.response.data.forEach(item => res.push(...item))
-
-          return res
-        } else {
-          return []
-        }
+    watch: {
+      list (nv, ov) {
+        this.store.forEach(item => {
+          URL.revokeObjectURL(item)
+        })
       }
     },
     mounted () {
-      this.$Lazyload.$on('loaded', async e => {
-        console.log(e)
-        const { cover, fromtype } = e.el.dataset
+      this.$renderer.on('get_image_complete', (evt, arg) => {
+        if (arg.state) {
+          const { id, data, type } = arg.data
 
-        const res = await this.cover(cover, fromtype)
-        console.log(res)
-        this.$nextTick(() => {
-          e.el.src = res
-        })
+          const blob = new Blob([new Uint8Array(data)], { type })
+
+          const el = document.getElementById(id)
+
+          if (el) {
+            el.src = URL.createObjectURL(blob)
+
+            this.store.push(el.src)
+          }
+        } else {
+          this.$toasted.error(arg.message)
+        }
       })
 
-      console.log(this.$Lazyload)
+      this.$Lazyload.$on('loaded', async e => {
+        const { cover, fromtype } = e.el.dataset
+
+        this.getCover(cover, fromtype, e.el.id)
+      })
+    },
+    beforeDestroy () {
+      this.$renderer.removeAllListeners('get_image_complete')
     },
     methods: {
-      async onSearch () {
+      generateId () {
+        return shortid.generate()
+      },
+      onSearch () {
         if (this.keyword === '') {
           return
         }
@@ -58,24 +79,29 @@
           from: ['dmzj']
         }
 
-        this.$store.commit('app/setLoading', true)
+        this.$store.commit('app/setLoadingState', true)
 
-        const res = await this.$renderer.sendSync('searchComic', params)
+        this.$renderer.send('search_comic', params)
 
-        this.data = res
+        this.$renderer.once('search_complete', (evt, arg) => {
+          if (arg.state) {
+            this.list = arg.data[0]
 
-        this.$store.commit('app/setLoading', false)
+            this.list.length === 0 ? this.$toasted.show('( ´◔ ‸◔`) 没找到你想搜的漫画') : ''
+          } else {
+            this.$toasted.error(arg.message)
+          }
+
+          this.$store.commit('app/setLoadingState', false)
+        })
       },
-      async cover (url, target) {
-        console.log(url, target)
+      getCover (url, target, id) {
+        this.$renderer.send('get_image', { url, target, id })
+      },
+      onClick (item) {
+        this.isShow = true
 
-        const res = await this.$renderer.sendSync('getCover', { url, target })
-
-        const { data, type } = res.response
-
-        const blob = new Blob([new Uint8Array(data.data)], { type })
-
-        return URL.createObjectURL(blob)
+        this.selected = item
       }
     }
   }
@@ -83,12 +109,15 @@
 
 <style lang="scss" scoped>
   .container {
+    overflow: hidden;
+
     .search-container {
       text-align: center;
       position: absolute;
       width: 100%;
       top: 30%;
       transition: top 1s ease;
+      height: 100%;
     }
 
     .mu-input {
@@ -123,10 +152,14 @@
   }
 
   .show {
-    // width: 100%;
+    width: 100%;
 
     .search-container {
-      top: 5% !important;
+      top: 0 !important;
+    }
+
+    .search-button, .mu-input, /deep/ .vm-scrollbar__wrap {
+      padding-right: 144px;
     }
   }
 
@@ -148,12 +181,28 @@
 
     img {
       width: 100%;
+      user-select: none;
+      transition: .5s ease;
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.2);
+      }
     }
 
     span {
       background: rgba(0, 0, 0, 0.5);
       color: #fff;
     }
+  }
+
+  /deep/ .vm-scrollbar {
+    height: calc(100% - 36px - 48px);
+  }
+
+  /deep/ .vm-scrollbar__wrap {
+    height: 100%;
+    overflow-x: hidden;
   }
 </style>
 
