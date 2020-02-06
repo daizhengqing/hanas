@@ -1,4 +1,8 @@
 import Router from './router.js'
+import ChapterService from './service/chapter.js'
+import ImagesService from './service/images.js'
+import ListService from './service/list.js'
+import SearchService from './service/search.js'
 import {
   ipcMain
 } from 'electron'
@@ -17,7 +21,10 @@ export default class App {
    * 初始化
    */
   async init () {
-    await this.loadService()
+    this.service.chapter = new ChapterService(this)
+    this.service.images = new ImagesService(this)
+    this.service.list = new ListService(this)
+    this.service.search = new SearchService(this)
 
     this.router.init()
   }
@@ -26,15 +33,15 @@ export default class App {
    * 加载服务类
    */
   async loadService () {
-    const fs = require('fs')
-    const path = require('path')
+    // const fs = require('fs')
+    // const path = require('path')
 
-    const pathCollection = await fs.readdirSync(path.join(__dirname, './service'))
+    // const pathCollection = await fs.readdirSync(path.join(__dirname, './service'))
 
-    pathCollection.forEach(filename => {
-      const Service = require(`./service/${filename}`).default
+    // pathCollection.forEach(filename => {
+    //   const Service = require(`./service/${filename}`).default
 
-      this.service[filename.replace('.js', '')] = new Service(this)
-    })
+    //   this.service[filename.replace('.js', '')] = new Service(this)
+    // })
   }
 }

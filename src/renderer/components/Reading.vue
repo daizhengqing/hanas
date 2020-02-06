@@ -10,7 +10,7 @@
         div(slot="center") {{ $store.state.app.current.title }}
     Scrollbar(ref="scrollbar")
       .item(v-for="item in list")
-        img(src="/static/image/loading.gif" :id="generateId()" @load.once="getImg(item, $event)" v-contextMenu:ctxMenu="item")
+        img(:src="require('@/assets/image/loading.gif')" :id="generateId()" @load.once="getImg(item, $event)" v-contextMenu:ctxMenu="item")
     Control
     
 </template>
@@ -20,6 +20,7 @@
   import Control from './Control'
   import Header from './Header/index'
   import shortid from 'shortid'
+  import path from 'path'
 
   export default {
     name: 'reading',
@@ -27,7 +28,8 @@
     data () {
       return {
         list: [],
-        store: []
+        store: [],
+        analysisWorker: null
       }
     },
     watch: {
@@ -45,18 +47,32 @@
       }
     },
     mounted () {
+      const analysisWorkerPath = process.env.NODE_ENV === 'development'
+        ? '/static/worker/analysis.js'
+        : path.join(__dirname, '/static/worker/analysis.js')
+
+      this.analysisWorker = new Worker(analysisWorkerPath)
+
+      const bufferToBlobWorkerPath = process.env.NODE_ENV === 'development'
+        ? '/static/worker/bufferToBlob.js'
+        : path.join(__dirname, '/static/worker/bufferToBlob.js')
+
+      this.bufferToBlobWorker = new Worker(bufferToBlobWorkerPath)
+
       this.$renderer.on('get_image_complete', (evt, arg) => {
         if (arg.state) {
           const { data, type, id } = arg.data
 
-          const blob = new Blob([new Uint8Array(data)], { type })
+          this.bufferToBlobWorker.postMessage([data, type])
 
-          const el = document.getElementById(id)
+          this.bufferToBlobWorker.onmessage = e => {
+            const el = document.getElementById(id)
 
-          if (el) {
-            el.src = URL.createObjectURL(blob)
+            if (el) {
+              el.src = e.data
 
-            this.store.push(el.src)
+              this.store.push(el.src)
+            }
           }
         } else {
           this.$toasted.error(arg.message)
@@ -65,7 +81,9 @@
 
       this.$renderer.on('get_chapter_complete', (evt, arg) => {
         if (arg.state) {
-          this.list = arg.data
+          this.analysisWorker.postMessage([arg.data, arg.type])
+
+          this.analysisWorker.onmessage = e => { e.data.state ? this.list = e.data.data : this.$toasted.error(arg.message) }
         } else {
           this.$toasted.error(arg.message)
         }

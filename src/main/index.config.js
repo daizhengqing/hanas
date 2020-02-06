@@ -5,5 +5,8 @@ export default {
   minHeight: 600,
   useContentSize: true,
   center: true,
-  frame: false
+  frame: false,
+  webPreferences: {
+    nodeIntegrationInWorker: true
+  }
 }

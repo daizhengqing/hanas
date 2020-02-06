@@ -108,7 +108,7 @@ let rendererConfig = {
         }
       },
       {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        test: /\.(woff2?|eot|ttf|otf|TTF)(\?.*)?$/,
         use: {
           loader: 'url-loader',
           query: {

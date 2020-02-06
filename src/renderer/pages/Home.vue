@@ -8,7 +8,7 @@
         .search-result(v-if="list.length > 0")
           .item(v-for="item in list" :key="item.url" @click="onClick(item)")
             .cover-container
-              img(v-lazy="`/static/image/logo.png`" :id="generateId()" :data-cover="item.cover" :data-fromType="item.fromType")
+              img(v-lazy="require('@/assets/image/logo.png')" :id="generateId()" :data-cover="item.cover" :data-fromType="item.fromType")
             span {{ item.name }}
     Details(:isShow.sync="isShow" :selected="selected" @close="isShow = false")
 </template>
@@ -17,6 +17,7 @@
   import Scrollbar from 'vue-multiple-scrollbar'
   import Details from './Details'
   import shortid from 'shortid'
+  import path from 'path'
 
   export default {
     name: 'home',
@@ -38,18 +39,26 @@
       }
     },
     mounted () {
+      const bufferToBlobWorkerPath = process.env.NODE_ENV === 'development'
+        ? '/static/worker/bufferToBlob.js'
+        : path.join(__dirname, '/static/worker/bufferToBlob.js')
+
+      this.bufferToBlobWorker = new Worker(bufferToBlobWorkerPath)
+
       this.$renderer.on('get_image_complete', (evt, arg) => {
         if (arg.state) {
           const { id, data, type } = arg.data
 
-          const blob = new Blob([new Uint8Array(data)], { type })
+          this.bufferToBlobWorker.postMessage([data, type])
 
-          const el = document.getElementById(id)
+          this.bufferToBlobWorker.onmessage = e => {
+            const el = document.getElementById(id)
 
-          if (el) {
-            el.src = URL.createObjectURL(blob)
+            if (el) {
+              el.src = e.data
 
-            this.store.push(el.src)
+              this.store.push(el.src)
+            }
           }
         } else {
           this.$toasted.error(arg.message)

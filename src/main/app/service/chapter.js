@@ -14,6 +14,7 @@ export default class Chapter {
 
       this.app.mainWindow.webContents.send('get_chapter_complete', {
         data,
+        type: arg.target,
         state: true
       })
     } catch (err) {
@@ -26,25 +27,9 @@ export default class Chapter {
 
   async dmzj (url, referer) {
     try {
-      let pages
-
-      let code
-
       const res = await axios.get(url)
 
-      eval(res.data.match(/eval.*\)\)/gm)[0].replace('eval(', 'eval( code = '))
-
-      code = code.replace('var', '')
-
-      eval(code)
-
-      pages = pages.replace(/\[/gm, '')
-
-      pages = pages.replace(/\]/gm, '')
-
-      pages = pages.replace(/\"/gm, '')
-
-      return pages.split(',').map(item => `http://images.dmzj.com/${item}`)
+      return res.data
     } catch (err) {
       throw new Error(err)
     }

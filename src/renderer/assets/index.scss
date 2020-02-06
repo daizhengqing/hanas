@@ -7,10 +7,10 @@
   margin: 0;
 }
 
-@import '/static/icon/iconfont.css';
+@import './icon/iconfont.css';
 @font-face {
   font-family: fzzy;
-  src: url('/static/font/FZZHYJW.TTF');
+  src: url('./font/FZZHYJW.TTF');
 }
 
 html, body, #app {
@@ -20,7 +20,7 @@ html, body, #app {
 }
 
 #app {
-  background: url('/static/image/background.jpg');
+  background: url('./image/background.jpg');
   background-color: rgba(0, 0, 0, .1);
   background-size: cover;
   background-blend-mode: darken;

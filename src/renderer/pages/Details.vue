@@ -14,7 +14,7 @@
       Scrollbar
         .chapter-list
           .item(v-for="item in list" :key="item.url" @click="onClick(item)")
-            mu-checkbox(:value="item" v-model="selected" :label="item.title" color="#fff")
+            mu-checkbox(:value="item" v-model="downloadList" :label="item.title" color="#fff")
 </template>
 
 <script>
@@ -28,7 +28,7 @@
       return {
         list: [],
         isDownload: false,
-        selected: []
+        downloadList: []
       }
     },
     computed: {
