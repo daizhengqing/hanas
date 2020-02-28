@@ -2,5 +2,5 @@
 
 > 漫画采集器 beat版
 
-目前仅支持动漫之家，之后会加入更多漫画网站
+download: https://github.com/daizhengqing/hanas/releases
 
