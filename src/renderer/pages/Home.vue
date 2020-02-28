@@ -8,7 +8,7 @@
         .search-result(v-if="list.length > 0")
           .item(v-for="item in list" :key="item.url")
             lazy-component.cover-container(@show="onShow" @click.native="onClick(item)")
-              img(:src="require('@/assets/image/logo.png')" :id="generateId()" :data-image="item.cover" :data-fromType="item.fromType")
+              img(:src="require('@/assets/image/loading_cover.png')" :id="generateId()" :data-image="item.cover" :data-fromType="item.fromType")
             span {{ item.name }}
     Details(:isShow.sync="isShow" :selected="selected" @close="isShow = false")
 </template>
