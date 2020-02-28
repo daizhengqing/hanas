@@ -61,7 +61,23 @@
 
       this.bufferToBlobWorker = new Worker(bufferToBlobWorkerPath)
 
-      this.$renderer.on('get_image_complete', (evt, arg) => {
+      this.$renderer.on('get_image_complete', this.getImageComplete)
+
+      this.$renderer.on('get_chapter_complete', this.getCharpterComplete)
+
+      this.getCharpter()
+
+      this.$toasted.show('Tips: 图片加载过慢可以右键刷新它哦')
+    },
+    beforeDestroy () {
+      this.$renderer.removeListeners('get_chapter_complete', this.getCharpterComplete)
+      this.$renderer.removeListeners('get_image_complete', this.getImageComplete)
+    },
+    methods: {
+      generateId () {
+        return shortid.generate()
+      },
+      getImageComplete (evt, arg) {
         if (arg.state) {
           const { id, data, type } = arg.data
 
@@ -79,9 +95,8 @@
         } else {
           this.$toasted.error(arg.message)
         }
-      })
-
-      this.$renderer.on('get_chapter_complete', (evt, arg) => {
+      },
+      getCharpterComplete (evt, arg) {
         if (arg.state) {
           this.analysisWorker.postMessage([arg.data, arg.type])
 
@@ -89,19 +104,6 @@
         } else {
           this.$toasted.error(arg.message)
         }
-      })
-
-      this.getCharpter()
-
-      this.$toasted.show('Tips: 图片加载过慢可以右键刷新它哦')
-    },
-    beforeDestroy () {
-      this.$renderer.removeAllListeners('get_chapter_complete')
-      this.$renderer.removeAllListeners('get_image_complete')
-    },
-    methods: {
-      generateId () {
-        return shortid.generate()
       },
       async getCharpter () {
         const params = {
