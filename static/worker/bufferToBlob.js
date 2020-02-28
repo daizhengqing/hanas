@@ -3,11 +3,14 @@
 'use strict'
 
 onmessage = function (e) {
-  const [data, type] = e.data
+  const [data, type, id] = e.data
 
   const blob = new Blob([new Uint8Array(data)], { type })
 
   const res = URL.createObjectURL(blob)
 
-  this.postMessage(res)
+  this.postMessage({
+    data: res,
+    id
+  })
 }

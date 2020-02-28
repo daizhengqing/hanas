@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Axios from 'Axios'
 import MuseUI from 'muse-ui'
-import VueLazyLoad from 'vue-lazyload'
+import VueLazyload from 'vue-lazyload'
 import Toasted from 'vue-toasted'
 import VueContextMenu from '@ddzq789/vue-context-menu'
 
@@ -21,8 +21,9 @@ Vue.use(Toasted, {
 })
 Vue.use(MuseUI)
 Vue.use(VueContextMenu)
-Vue.use(VueLazyLoad, {
-  lazyComponent: true
+Vue.use(VueLazyload, {
+  lazyComponent: true,
+  preLoad: 3.5
 })
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))

@@ -6,9 +6,9 @@
         mu-button(flat @click="onSearch") 搜索
       Scrollbar
         .search-result(v-if="list.length > 0")
-          .item(v-for="item in list" :key="item.url" @click="onClick(item)")
-            .cover-container
-              img(v-lazy="require('@/assets/image/logo.png')" :id="generateId()" :data-cover="item.cover" :data-fromType="item.fromType")
+          .item(v-for="item in list" :key="item.url")
+            lazy-component.cover-container(@show="onShow" @click.native="onClick(item)")
+              img(:src="require('@/assets/image/logo.png')" :id="generateId()" :data-image="item.cover" :data-fromType="item.fromType")
             span {{ item.name }}
     Details(:isShow.sync="isShow" :selected="selected" @close="isShow = false")
 </template>
@@ -49,13 +49,13 @@
         if (arg.state) {
           const { id, data, type } = arg.data
 
-          this.bufferToBlobWorker.postMessage([data, type])
+          this.bufferToBlobWorker.postMessage([data, type, id])
 
           this.bufferToBlobWorker.onmessage = e => {
-            const el = document.getElementById(id)
+            const el = document.getElementById(e.data.id)
 
             if (el) {
-              el.src = e.data
+              el.src = e.data.data
 
               this.store.push(el.src)
             }
@@ -64,17 +64,18 @@
           this.$toasted.error(arg.message)
         }
       })
-
-      this.$Lazyload.$on('loaded', async e => {
-        const { cover, fromtype } = e.el.dataset
-
-        this.getCover(cover, fromtype, e.el.id)
-      })
     },
     beforeDestroy () {
       this.$renderer.removeAllListeners('get_image_complete')
     },
     methods: {
+      onShow (component) {
+        this.$nextTick(() => {
+          const img = component.$el.querySelector('img')
+
+          img ? this.getImage(img.dataset.image, img.dataset.fromtype, img.id) : null
+        })
+      },
       generateId () {
         return shortid.generate()
       },
@@ -104,8 +105,8 @@
           this.$store.commit('app/setLoadingState', false)
         })
       },
-      getCover (url, target, id) {
-        this.$renderer.send('get_image', { url, target, id })
+      getImage (url, target, id) {
+        this.$renderer.send('get_image', { url: encodeURI(url), target, id })
       },
       onClick (item) {
         this.isShow = true

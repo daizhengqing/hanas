@@ -73,10 +73,18 @@
 
 <style lang="scss" scoped>
   /deep/ .mu-dialog {
-     background: rgba(0,0,0,.9);
-     font-family: fzzy;
-     text-align: center;
-   }
+    background: rgba(0,0,0,.9);
+    font-family: fzzy;
+    text-align: center;
+
+    .mu-dialog-body {
+      height: 100%;
+    }
+
+    /deep/ .vm-scrollbar {
+      height: calc(100% - 36px);
+    }
+  }
 
   .title {
     line-height: 40px;

@@ -9,10 +9,12 @@
             i.iconfont.icon-arrow_back
         div(slot="center") {{ $store.state.app.current.title }}
     Scrollbar(ref="scrollbar")
-      .item(v-for="item in list")
-        img(:src="require('@/assets/image/loading.gif')" :id="generateId()" @load.once="getImg(item, $event)" v-contextMenu:ctxMenu="item")
+      .item(v-for="item, index in list")
+        lazy-component(style="min-height: 500px;" @show="onShow")
+          img(:src="require('@/assets/image/loading.gif')" :id="generateId()" :data-image="item" v-contextMenu:ctxMenu="item")
+        span(style="color: #fff;") {{ `${index + 1}/${list.length}` }}
     Control
-    
+
 </template>
 
 <script>
@@ -61,15 +63,15 @@
 
       this.$renderer.on('get_image_complete', (evt, arg) => {
         if (arg.state) {
-          const { data, type, id } = arg.data
+          const { id, data, type } = arg.data
 
-          this.bufferToBlobWorker.postMessage([data, type])
+          this.bufferToBlobWorker.postMessage([data, type, id])
 
           this.bufferToBlobWorker.onmessage = e => {
-            const el = document.getElementById(id)
+            const el = document.getElementById(e.data.id)
 
             if (el) {
-              el.src = e.data
+              el.src = e.data.data
 
               this.store.push(el.src)
             }
@@ -109,12 +111,16 @@
 
         this.$renderer.send('get_chapter', params)
       },
-      async getImg (url, evt) {
-        this.$renderer.send('get_image', {
-          url,
-          target: this.$store.state.app.current.fromType,
-          referer: this.$store.state.app.current.url,
-          id: evt.path[0].id
+      async onShow (component) {
+        this.$nextTick(() => {
+          const img = component.$el.querySelector('img')
+
+          img ? this.$renderer.send('get_image', {
+            url: img.dataset.image,
+            target: this.$store.state.app.current.fromType,
+            referer: this.$store.state.app.current.url,
+            id: img.id
+          }) : null
         })
       },
       onBackClick () {
@@ -135,12 +141,13 @@
 
 <style lang="scss" scoped>
   .container {
-    position: fixed;
+    position: absolute;
     top: 0;
     width: 100%;
     height: 100%;
     background: #000;
     z-index: 100;
+    overflow: hidden;
 
     .item {
       text-align: center;
