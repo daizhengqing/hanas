@@ -29,22 +29,41 @@ function createWindow () {
 
   mainWindow.loadURL(winURL)
 
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
+  })
+
   mainWindow.on('closed', () => {
     mainWindow = null
   })
 
-  mainWindow.on('maximize', () => {
-    mainWindow.webContents.send('maximize-window')
+  ipcMain.on('min_window', (evt, arg) => {
+    const bw = BrowserWindow.fromWebContents(evt.sender)
+
+    bw.minimize()
   })
 
-  mainWindow.on('unmaximize', () => {
-    mainWindow.webContents.send('unmaximize-window')
+  ipcMain.on('full_window', (evt, arg) => {
+    const bw = BrowserWindow.fromWebContents(evt.sender)
+
+    bw.maximize()
+
+    evt.sender.send('maximize_window')
   })
 
-  ipcMain.on('min-window', () => { mainWindow.minimize() })
-  ipcMain.on('full-window', () => { mainWindow.maximize() })
-  ipcMain.on('exit-full-window', () => { mainWindow.unmaximize() })
-  ipcMain.on('close-window', () => { mainWindow.close() })
+  ipcMain.on('exit_full_window', (evt, arg) => {
+    const bw = BrowserWindow.fromWebContents(evt.sender)
+
+    bw.unmaximize()
+
+    evt.sender.send('unmaximize_window')
+  })
+
+  ipcMain.on('close_window', (evt) => {
+    const bw = BrowserWindow.fromWebContents(evt.sender)
+
+    bw.close()
+  })
 
   const hanas = new HANAs(mainWindow)
 

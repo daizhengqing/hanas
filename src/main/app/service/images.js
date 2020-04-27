@@ -33,14 +33,17 @@ export default class Images {
           'referer': referer,
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0'
         },
-        responseType: 'arraybuffer'
+        // responseType: 'arraybuffer'
+        responseType: 'stream'
       })
 
-      return {
-        data: res.data,
-        id,
-        type: res.headers['content-type']
-      }
+      return res
+
+      // return {
+      //   data: res.data,
+      //   id,
+      //   type: res.headers['content-type']
+      // }
     } catch (err) {
       throw new Error(err)
     }

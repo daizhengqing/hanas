@@ -30,7 +30,7 @@ export default class List {
 
       const list = Array.from($('.cartoon_online_border a'))
 
-      return list.map(item => {
+      return Array.from(list, item => {
         return {
           url: `https://manhua.dmzj.com${item.attribs.href}`,
           title: item.children[0].data

@@ -3,6 +3,8 @@
 'use strict'
 
 onmessage = function (e) {
+  this.dmzj = dmzj
+
   this[e.data[1]](e.data[0])
 }
 
@@ -20,9 +22,9 @@ function dmzj (data) {
 
     pages = pages.replace(/\]/gm, '')
 
-    pages = pages.replace(/\"/gm, '')
+    pages = pages.replace(/"/gm, '')
 
-    const res = pages.split(',').map(item => `http://images.dmzj.com/${item}`)
+    const res = pages.split(',').map(item => `http://localhost:3054/image/dmzj?url=http://images.dmzj.com/${item}`)
 
     postMessage({
       state: true,

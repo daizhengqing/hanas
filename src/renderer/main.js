@@ -4,6 +4,7 @@ import MuseUI from 'muse-ui'
 import VueLazyload from 'vue-lazyload'
 import Toasted from 'vue-toasted'
 import VueContextMenu from '@ddzq789/vue-context-menu'
+import VueScroller from 'vue-scroller'
 
 import App from './App'
 import router from './router'
@@ -12,6 +13,7 @@ import store from './store'
 import { ipcRenderer } from 'electron'
 
 import 'muse-ui/dist/muse-ui.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 import './assets/index.scss'
 
@@ -22,9 +24,9 @@ Vue.use(Toasted, {
 Vue.use(MuseUI)
 Vue.use(VueContextMenu)
 Vue.use(VueLazyload, {
-  lazyComponent: true,
   preLoad: 3.5
 })
+Vue.use(VueScroller)
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 

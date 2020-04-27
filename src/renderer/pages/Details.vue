@@ -1,20 +1,17 @@
 <template lang="pug">
-  mu-dialog(fullscreen :open.sync="isShow" :overlay="false")
-    .title 
-      span {{ data.name }}
-      //- span.download(@click="isDownload = true") 下载
-      span.back(@click="$emit('close'); list = []") 返回
+  .details
+    .nav
+      span(@click="$router.back()") 返回上一页
+    .info
+      .info-img
+        img(:src="data.cover")
+      .info-item 名称：{{ data.name }}
+      .info-item 作者：{{ data.author }}
+      .info-item 最近：{{ data.last }}
     Scrollbar
       .chapter-list
-        .item(v-for="item in list" :key="item.url" @click="onClick(item)")
+        .list-item(v-for="item in list" :key="item.title" @click="onClick(item)")
           span {{ item.title }}
-    mu-dialog(fullscreen :open.sync="isDownload" :overlay="false")
-      .title
-        span 选择要下载的内容
-      Scrollbar
-        .chapter-list
-          .item(v-for="item in list" :key="item.url" @click="onClick(item)")
-            mu-checkbox(:value="item" v-model="downloadList" :label="item.title" color="#fff")
 </template>
 
 <script>
@@ -22,7 +19,6 @@
 
   export default {
     name: 'detail',
-    props: ['isShow', 'selected'],
     components: { Scrollbar },
     data () {
       return {
@@ -33,97 +29,114 @@
     },
     computed: {
       data () {
-        return this.selected || {}
+        return this.$route.query
       }
     },
-    watch: {
-      isShow (nv, ov) {
-        if (!nv) return
+    created () {
+      this.$renderer.on('get_list_complete', this.onGetListComplete)
 
-        this.getList()
-      }
+      this.getList()
+    },
+    beforeDestroy () {
+      this.$renderer.removeAllListeners('get_list_complete')
     },
     methods: {
       async getList () {
         const { fromType: target, url } = this.data
 
-        this.$renderer.send('get_list', {
-          target, url
-        })
+        this.$renderer.send('get_list', { target, url })
+      },
+      onGetListComplete (evt, arg) {
+        if (arg.state) {
+          this.list = Array.from(arg.data, item => { return { ...item, fromType: this.data.fromType } })
 
-        this.$renderer.once('get_list_complete', (evt, arg) => {
-          if (arg.state) {
-            this.list = arg.data.map(item => { return { ...item, fromType: target } })
-
-            if (this.list.length === 0) this.$toasted.show('(/= _ =)/~┴┴ 看上去没有可以阅读的章节呢')
-          } else {
-            this.$toasted.error(arg.message)
-          }
-        })
+          if (this.list.length === 0) this.$toasted.show('(/= _ =)/~┴┴ 看上去没有可以阅读的章节呢')
+        } else {
+          this.$toasted.error(arg.message)
+        }
       },
       onClick (item) {
-        const data = { ...item, list: this.list }
+        let rw = window.open(`${location.origin}/#/reading`, '_blank')
 
-        this.$store.commit('app/setReadingState', true)
-        this.$store.commit('app/setCurrentReading', data)
+        const func = () => {
+          rw.postMessage({
+            status: 1,
+            data: { current: item, chapterList: this.list, comic: this.data }
+          })
+
+          window.removeEventListener('message', func)
+        }
+
+        window.addEventListener('message', func)
       }
     }
   }
 </script>
 
 <style lang="scss" scoped>
-  /deep/ .mu-dialog {
-    background: rgba(0,0,0,.9);
-    font-family: fzzy;
-    text-align: center;
+  .details {
+    height: 100%;
+    padding-top: 76px;
+    display: flex;
 
-    .mu-dialog-body {
-      height: 100%;
+    .nav {
+      position: absolute;
+      color: #fff;
+      top: 40px;
+      left: 20px;
+
+      & span:hover {
+        cursor: pointer;
+        border-bottom: 1px solid #fff;
+      }
+    }
+  
+    .info {
+      width: 240px;
+
+      &-img {
+        text-align: center;
+        img {
+          width: 200px;
+          border-radius: 5px;
+        }
+      }
+
+      &-item {
+        color: #fff;
+        padding-left: 20px;
+        line-height: 36px;
+      }
     }
 
     /deep/ .vm-scrollbar {
-      height: calc(100% - 36px);
+      flex: 1;
     }
-  }
 
-  .title {
-    line-height: 40px;
-    position: relative;
-  }
+    /deep/ .vm-scrollbar__wrap {
+      overflow-x: hidden;
+      height: 100%;
+    }
 
-  .title, .chapter-list {
-    color: #fff;
-  }
+    /deep/ .vm-scrollbar__view {
+      height: 100%;
+    }
 
-  .back, .download {
-    position: absolute;
-    font-size: 12px;
-    cursor: pointer;
-  }
+    .chapter-list {
+      height: auto;
+      display: grid;
+      grid-gap: 0;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 11fr));
 
-  .back {
-    right: 20px;
-  }
+      .list-item {
+        padding-bottom: 20px;
+        color: #fff;
 
-  .download {
-    right: 50px;
-  }
-
-  .chapter-list  {
-    display: grid;
-    grid-gap: 0;
-    grid-template-columns: repeat(auto-fill, minmax(150px,1fr));
-    padding: 0 5%;
-  }
-
-  .item {
-    margin: 10px;
-    line-height: 52px;
-    font-size: 14px;
-    
-    span:hover {
-      cursor: pointer;
-      border-bottom: 1px solid;
+        & span:hover {
+          cursor: pointer;
+          border-bottom: 1px solid #fff;
+        }
+      }
     }
   }
 </style>

@@ -1,20 +1,10 @@
 const state = {
-  loading: false,
-  current: {},
-  reading: false
+  title: ''
 }
 
 const mutations = {
-  setLoadingState (state, val) {
-    state.loading = val
-  },
-
-  setCurrentReading (state, val) {
-    state.current = val
-  },
-
-  setReadingState (state, val) {
-    state.reading = val
+  setTitle (state, val) {
+    state.title = val
   }
 }
 

@@ -1,13 +1,12 @@
 .container {
   max-width: none;
-  width: calc(100% - 144px);
+  width: 100%;
   height: 100%;
   position: relative;
   padding: 0;
   margin: 0;
 }
 
-@import './icon/iconfont.css';
 @font-face {
   font-family: fzzy;
   src: url('./font/FZZHYJW.TTF');
@@ -20,15 +19,15 @@ html, body, #app {
 }
 
 #app {
-  background: url('./image/background.jpg');
-  background-color: rgba(0, 0, 0, .1);
+  font-family: 'fzzy';
+  background-image: url('./image/bg.png');
+  background-color: rgba(0, 0, 0, .5);
   background-size: cover;
   background-blend-mode: darken;
-  font-family: 'fzzy';
 }
 
 #app-layout {
-  height: calc(100% - 36px);
+  height: 100%;
 }
 
 #app-aside, #app-container {
@@ -37,7 +36,7 @@ html, body, #app {
   vertical-align: bottom;
 }
 
-$app-aside-width: 144px;
+$app-aside-width: 0px;
 
 #app-aside {
   width: $app-aside-width;

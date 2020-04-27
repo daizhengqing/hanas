@@ -46,6 +46,10 @@ let webConfig = {
         use: ['vue-style-loader', 'css-loader']
       },
       {
+        test: /\.worker\.js$/,
+        use: { loader: 'worker-loader' }
+      },
+      {
         test: /\.html$/,
         use: 'vue-html-loader'
       },
@@ -112,7 +116,8 @@ let webConfig = {
   ],
   output: {
     filename: '[name].js',
-    path: path.join(__dirname, '../dist/web')
+    path: path.join(__dirname, '../dist/web'),
+    globalObject: 'this'
   },
   resolve: {
     alias: {

@@ -9,16 +9,18 @@ export default class Chapter {
   }
 
   async get (evt, arg) {
+    console.log(evt, arg)
+
     try {
       const data = await this[arg.target](encodeURI(arg.url))
 
-      this.app.mainWindow.webContents.send('get_chapter_complete', {
+      evt.sender.send('get_chapter_complete', {
         data,
         type: arg.target,
         state: true
       })
     } catch (err) {
-      this.app.mainWindow.webContents.send('get_chapter_complete', {
+      evt.sender.send('get_chapter_complete', {
         state: false,
         message: err.message
       })

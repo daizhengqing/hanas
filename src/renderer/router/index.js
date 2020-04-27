@@ -11,20 +11,39 @@ export default new Router({
       component: require('@/pages/Home').default
     },
     {
-      path: '/bookshelf',
+      path: '/search',
       name: '书架',
-      component: require('@/pages/BookShelf').default
+      component: require('@/pages/Search').default
     },
     {
-      path: '/download',
-      name: '下载',
-      component: require('@/pages/Download').default
+      path: '/details',
+      component: require('@/pages/Details').default
     },
     {
-      path: '/setting',
-      name: '设置',
-      component: require('@/pages/Setting').default
+      path: '/reading',
+      name: 'reading',
+      component: require('@/pages/Reading').default
     },
+    // {
+    //   path: '/bookshelf',
+    //   name: '书架',
+    //   component: require('@/pages/BookShelf').default
+    // },
+    // {
+    //   path: '/download',
+    //   name: '下载',
+    //   component: require('@/pages/Download').default
+    // },
+    // {
+    //   path: '/setting',
+    //   name: '设置',
+    //   component: require('@/pages/Setting').default
+    // },
+    // {
+    //   path: '/tray',
+    //   name: '托盘',
+    //   component: require('@/pages/Tray').default
+    // },
     {
       path: '*',
       redirect: '/'

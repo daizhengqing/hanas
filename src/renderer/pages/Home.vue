@@ -1,117 +1,55 @@
 <template lang="pug">
-  .container(:class="list.length > 0 ? 'show' : ''")
+  .container
     .search-container
-      mu-text-field(type="text" v-model="keyword" placeholder="点击这里输入关键词搜索" @keydown.enter.native="onSearch")
-      .search-button(v-show="keyword !== '' || list.length > 0")
-        mu-button(flat @click="onSearch") 搜索
-      Scrollbar
-        .search-result(v-if="list.length > 0")
-          .item(v-for="item in list" :key="item.url")
-            lazy-component.cover-container(@show="onShow" @click.native="onClick(item)")
-              img(:src="require('@/assets/image/loading_cover.png')" :id="generateId()" :data-image="item.cover" :data-fromType="item.fromType")
-            span {{ item.name }}
-    Details(:isShow.sync="isShow" :selected="selected" @close="isShow = false")
+      div
+        div(style="color: rgba(255,255,255,.8); font-size: 17px; margin-bottom: 30px;") 些许的勇气即是真正的魔法
+        mu-text-field(
+          type="text" action-icon="search" v-model="keyword" 
+          placeholder="快乐的记忆与流过的眼泪，正是因为有大家在这些才有意义"
+          :action-click="onSearch"
+          @keydown.enter.native="onSearch"
+        )
 </template>
 
 <script>
-  import Scrollbar from 'vue-multiple-scrollbar'
-  import Details from './Details'
-  import shortid from 'shortid'
-  import path from 'path'
+  // import { urlEncode } from '@/utils/index'
 
   export default {
     name: 'home',
-    components: { Scrollbar, Details },
     data () {
       return {
-        keyword: '',
-        list: [],
-        isShow: false,
-        selected: null,
-        store: []
+        keyword: ''
       }
-    },
-    watch: {
-      list (nv, ov) {
-        this.store.forEach(item => {
-          URL.revokeObjectURL(item)
-        })
-      }
-    },
-    mounted () {
-      const bufferToBlobWorkerPath = process.env.NODE_ENV === 'development'
-        ? '/static/worker/bufferToBlob.js'
-        : path.join(__dirname, '/static/worker/bufferToBlob.js')
-
-      this.bufferToBlobWorker = new Worker(bufferToBlobWorkerPath)
-
-      this.$renderer.on('get_image_complete', (evt, arg) => {
-        if (arg.state) {
-          const { id, data, type } = arg.data
-
-          this.bufferToBlobWorker.postMessage([data, type, id])
-
-          this.bufferToBlobWorker.onmessage = e => {
-            const el = document.getElementById(e.data.id)
-
-            if (el) {
-              el.src = e.data.data
-
-              this.store.push(el.src)
-            }
-          }
-        } else {
-          this.$toasted.error(arg.message)
-        }
-      })
-    },
-    beforeDestroy () {
-      this.$renderer.removeAllListeners('get_image_complete')
     },
     methods: {
-      onShow (component) {
-        this.$nextTick(() => {
-          const img = component.$el.querySelector('img')
+      async onSearch () {
+        if (this.keyword === '') return
 
-          img ? this.getImage(img.dataset.image, img.dataset.fromtype, img.id) : null
-        })
-      },
-      generateId () {
-        return shortid.generate()
-      },
-      onSearch () {
-        if (this.keyword === '') {
-          return
-        }
+        this.$router.push(`/search?keyword=${this.keyword}`)
 
-        const params = {
-          keyword: this.keyword,
-          from: ['dmzj']
-        }
+        // const big5Keyword = await urlEncode(this.keyword, 'big5')
 
-        this.$store.commit('app/setLoadingState', true)
+        // const params = {
+        //   utf8Keyword: this.keyword,
+        //   big5Keyword,
+        //   from: ['dmzj', 'comic8']
+        // }
 
-        this.$renderer.send('search_comic', params)
+        // this.$store.commit('app/setLoadingState', true)
 
-        this.$renderer.once('search_complete', (evt, arg) => {
-          if (arg.state) {
-            this.list = arg.data[0]
+        // this.$renderer.send('search_comic', params)
 
-            this.list.length === 0 ? this.$toasted.show('( ´◔ ‸◔`) 没找到你想搜的漫画') : ''
-          } else {
-            this.$toasted.error(arg.message)
-          }
+        // this.$renderer.once('search_complete', (evt, arg) => {
+        //   if (arg.state) {
+        //     this.list = arg.data[0]
 
-          this.$store.commit('app/setLoadingState', false)
-        })
-      },
-      getImage (url, target, id) {
-        this.$renderer.send('get_image', { url: encodeURI(url), target, id })
-      },
-      onClick (item) {
-        this.isShow = true
+        //     this.list.length === 0 ? this.$toasted.show('( ´◔ ‸◔`) 没找到你想搜的漫画') : ''
+        //   } else {
+        //     this.$toasted.error(arg.message)
+        //   }
 
-        this.selected = item
+        //   this.$store.commit('app/setLoadingState', false)
+        // })
       }
     }
   }
@@ -119,24 +57,29 @@
 
 <style lang="scss" scoped>
   .container {
-    overflow: hidden;
-
     .search-container {
       text-align: center;
-      position: absolute;
       width: 100%;
-      top: 30%;
-      transition: top 1s ease;
       height: 100%;
+      transition: top 1s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .mu-input {
       color: rgba(255, 255, 255, .8) !important;
       margin: 0 !important;
+      width: 430px !important;
     }
 
-    /deep/ .mu-input-line {
-      background-color: rgba(0,0,0,0);
+    /deep/ .mu-input-line,  /deep/ .mu-input-focus-line {
+      display: none;
+    }
+
+    /deep/ .mu-text-field {
+      border: 1px solid;
+          color: rgba(255,255,255,.7);
     }
 
     /deep/ .mu-input__focus {
@@ -159,60 +102,6 @@
     /deep/ button {
       color: rgba(255, 255, 255, .9)
     }
-  }
-
-  .show {
-    width: 100%;
-
-    .search-container {
-      top: 0 !important;
-    }
-
-    .search-button, .mu-input, /deep/ .vm-scrollbar__wrap {
-      padding-right: 144px;
-    }
-  }
-
-  .search-result {
-    display: grid;
-    grid-gap: 0;
-    grid-template-columns: repeat(auto-fill, minmax(150px,1fr));
-
-    .item {
-      padding: 7px;
-    }
-
-    .cover-container {
-      height: 192px;
-      overflow: hidden;
-      margin-bottom: 5px;
-      border-radius: 3px;
-    }
-
-    img {
-      width: 100%;
-      user-select: none;
-      transition: .5s ease;
-
-      &:hover {
-        cursor: pointer;
-        transform: scale(1.2);
-      }
-    }
-
-    span {
-      background: rgba(0, 0, 0, 0.5);
-      color: #fff;
-    }
-  }
-
-  /deep/ .vm-scrollbar {
-    height: calc(100% - 36px - 48px);
-  }
-
-  /deep/ .vm-scrollbar__wrap {
-    height: 100%;
-    overflow-x: hidden;
   }
 </style>
 

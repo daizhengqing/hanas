@@ -63,6 +63,10 @@ let rendererConfig = {
         use: ['vue-style-loader', 'css-loader']
       },
       {
+        test: /\.worker\.js$/,
+        use: { loader: 'worker-loader' }
+      },
+      {
         test: /\.html$/,
         use: 'vue-html-loader'
       },
@@ -144,7 +148,8 @@ let rendererConfig = {
   output: {
     filename: '[name].js',
     libraryTarget: 'commonjs2',
-    path: path.join(__dirname, '../dist/electron')
+    path: path.join(__dirname, '../dist/electron'),
+    globalObject: 'this'
   },
   resolve: {
     alias: {

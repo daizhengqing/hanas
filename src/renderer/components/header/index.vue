@@ -6,11 +6,11 @@
       slot(name="center")
     .header-right
       mu-button.button(flat @click="onMinButtonClick")
-        i.iconfont.icon-minus
+        mu-icon(value="minimize")
       mu-button.button(flat @click="onFullScreenButtonClick")
-        i(:class="['iconfont', !fullScreen ? 'icon-fullscreen' : 'icon-fullscreen-exit']")
+        mu-icon(:value="!fullScreen ? 'fullscreen' : 'fullscreen_exit'")
       mu-button.button(flat @click="onCloseButtonClick")
-        i.iconfont.icon-close
+        mu-icon(value="close")
 </template>
 
 <script>
@@ -22,23 +22,23 @@ export default {
     }
   },
   mounted () {
-    this.$renderer.on('maximize-window', (evt, arg) => {
+    this.$renderer.on('maximize_window', (evt, arg) => {
       this.fullScreen = true
     })
 
-    this.$renderer.on('unmaximize-window', (evt, arg) => {
+    this.$renderer.on('unmaximize_window', (evt, arg) => {
       this.fullScreen = false
     })
   },
   methods: {
     onMinButtonClick () {
-      this.$renderer.send('min-window')
+      this.$renderer.send('min_window')
     },
     onFullScreenButtonClick () {
-      this.fullScreen ? this.$renderer.send('exit-full-window') : this.$renderer.send('full-window')
+      this.fullScreen ? this.$renderer.send('exit_full_window') : this.$renderer.send('full_window')
     },
     onCloseButtonClick () {
-      this.$renderer.send('close-window')
+      this.$renderer.send('close_window')
     }
   }
 }
@@ -56,12 +56,16 @@ export default {
   }
 
   $app-header-height: 36px;
-  $app-side-width: 144px;
+  $app-side-width: 200px;
   $font-color: rgba(255 ,255, 255, .9);
 
   .app-header {
     -webkit-app-region: drag;
     -webkit-user-select: none;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%;
 
     & > * {
       @extend %inline-block;
@@ -72,6 +76,7 @@ export default {
     }
 
     .header-left {
+      @extend %no-drag;
       width: $app-side-width;
       text-align: left;
       padding-left: 16px;
@@ -88,14 +93,18 @@ export default {
     }
 
     .button {
-        @extend %no-drag;
-        min-width: auto;
-        color: $font-color;
+      @extend %no-drag;
+      min-width: auto;
+      color: $font-color;
 
-        i {
-          color: $font-color;
-        }
+      i {
+        color: $font-color;
       }
+    }
+
+    /deep/ .mu-icon {
+      font-size: 16px;
+    }
   }
 </style>
 
