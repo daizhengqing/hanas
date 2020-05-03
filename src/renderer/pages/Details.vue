@@ -1,7 +1,9 @@
 <template lang="pug">
   .details
     .nav
-      span(@click="$router.back()") 返回上一页
+      span(@click="$router.push('/')") 返回
+      span(style="margin-left: 10px;") 收藏到我的书架
+      span(style="margin-left: 10px;") 下载
     .info
       .info-img
         img(:src="data.cover")

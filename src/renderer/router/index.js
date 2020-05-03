@@ -12,11 +12,12 @@ export default new Router({
     },
     {
       path: '/search',
-      name: '书架',
+      name: 'search',
       component: require('@/pages/Search').default
     },
     {
       path: '/details',
+      name: 'details',
       component: require('@/pages/Details').default
     },
     {
@@ -34,11 +35,11 @@ export default new Router({
     //   name: '下载',
     //   component: require('@/pages/Download').default
     // },
-    // {
-    //   path: '/setting',
-    //   name: '设置',
-    //   component: require('@/pages/Setting').default
-    // },
+    {
+      path: '/setting',
+      name: 'setting',
+      component: require('@/pages/Setting').default
+    },
     // {
     //   path: '/tray',
     //   name: '托盘',

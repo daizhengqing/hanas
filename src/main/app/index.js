@@ -4,6 +4,7 @@ import Images from './service/images.js'
 import List from './service/list.js'
 import Search from './service/search.js'
 import ImageServer from './image-server.js'
+import Config from './service/config.js'
 import {
   ipcMain
 } from 'electron'
@@ -23,6 +24,7 @@ export default class App {
    * 初始化
    */
   async init () {
+    this.service.config = new Config(this)
     this.service.chapter = new Chapter(this)
     this.service.images = new Images(this)
     this.service.list = new List(this)

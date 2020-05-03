@@ -5,12 +5,13 @@
     .header-center
       slot(name="center")
     .header-right
-      mu-button.button(flat @click="onMinButtonClick")
-        mu-icon(value="minimize")
-      mu-button.button(flat @click="onFullScreenButtonClick")
-        mu-icon(:value="!fullScreen ? 'fullscreen' : 'fullscreen_exit'")
-      mu-button.button(flat @click="onCloseButtonClick")
-        mu-icon(value="close")
+      slot(name="right")
+    //-   mu-button.button(flat @click="onMinButtonClick")
+    //-     mu-icon(value="minimize")
+    //-   mu-button.button(flat @click="onFullScreenButtonClick")
+    //-     mu-icon(:value="!fullScreen ? 'fullscreen' : 'fullscreen_exit'")
+    //-   mu-button.button(flat @click="onCloseButtonClick")
+    //-     mu-icon(value="close")
 </template>
 
 <script>

@@ -20,10 +20,12 @@ html, body, #app {
 
 #app {
   font-family: 'fzzy';
-  background-image: url('./image/bg.png');
+  // background-image: url('./image/bg.jpg');
   background-color: rgba(0, 0, 0, .5);
-  background-size: cover;
+  // background-size: cover;
   background-blend-mode: darken;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 #app-layout {

@@ -12,5 +12,7 @@ export default class Router {
     ipcMain.on('get_image', (evt, arg) => { this.app.service.images.get(evt, arg) })
     ipcMain.on('get_list', (evt, arg) => { this.app.service.list.get(evt, arg) })
     ipcMain.on('get_chapter', (evt, arg) => { this.app.service.chapter.get(evt, arg) })
+    ipcMain.on('getConfig', () => { this.app.service.config.get() })
+    ipcMain.on('setConfig', (evt, arg) => { this.app.service.config.set(evt, arg) })
   }
 }

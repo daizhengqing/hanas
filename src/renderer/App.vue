@@ -1,13 +1,11 @@
 <template lang="pug">
-  #app
-    AppHeader(:style="{ background: $route.name === 'reading' ? 'rgba(0,0,0,.8)' : '' }")
-      .header-nav(slot="left" v-if="$route.name !== 'reading'")
+  #app(:style="style")
+    AppHeader
+      .header-nav(slot="right" v-if="$route.name !== 'reading'")
         span(@click="$router.push('/')") 首页
         span 书架
         span 下载
-        span 设置
-      .header-title(slot="center" v-if="$route.name === 'reading'")
-        span {{ title }}
+        span(@click="$router.push('/setting')") 设置
     #app-layout
       #app-container
         router-view
@@ -18,13 +16,38 @@
   import AppHeader from './components/Header/index'
   import AppAside from './components/Aside'
   import AppLoading from './components/Loading'
+
   export default {
     name: 'hanas',
+
     components: { AppHeader, AppAside, AppLoading },
+
     computed: {
-      title () {
-        return this.$store.state.app.title
+      bg () {
+        return this.$store.state.app.config.bg
+      },
+
+      style () {
+        if (this.bg) {
+          return {
+            'background-image': `url('file://${this.bg}')`,
+            'background-size': 'cover',
+            'background-position': 'unset'
+          }
+        } else {
+          return {
+            'background-image': `url(${require('@/assets/image/' + 'bg.jpg')})`
+          }
+        }
       }
+    },
+
+    created () {
+      this.$renderer.on('getConfig', (evt, arg) => {
+        this.$store.commit('app/setConfig', arg)
+      })
+
+      this.$renderer.send('getConfig')
     }
   }
 </script>

@@ -2,7 +2,7 @@
   .container
     .search-container
       div
-        div(style="color: rgba(255,255,255,.8); font-size: 17px; margin-bottom: 30px;") 些许的勇气即是真正的魔法
+        div(style="user-select: none; color: rgba(255, 255, 255, .8); font-size: 17px; margin-bottom: 30px;") 些许的勇气即是真正的魔法
         mu-text-field(
           type="text" action-icon="search" v-model="keyword" 
           placeholder="快乐的记忆与流过的眼泪，正是因为有大家在这些才有意义"
@@ -79,7 +79,7 @@
 
     /deep/ .mu-text-field {
       border: 1px solid;
-          color: rgba(255,255,255,.7);
+          color: rgba(255, 255, 255, .7);
     }
 
     /deep/ .mu-input__focus {

@@ -5,7 +5,7 @@ import {
   BrowserWindow,
   ipcMain
 } from 'electron'
-import config from './index.config.js'
+import Storage from './app/storage.js'
 import HANAs from './app/index'
 
 /**
@@ -16,18 +16,20 @@ if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
+const storage = new Storage()
 let mainWindow
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
 
-function createWindow () {
-  /**
-   * Initial window options
-   */
-  mainWindow = new BrowserWindow(config)
+async function createWindow () {
+  await storage.init()
+
+  mainWindow = new BrowserWindow(storage.config.window)
 
   mainWindow.loadURL(winURL)
+
+  mainWindow.storage = storage
 
   mainWindow.once('ready-to-show', () => {
     mainWindow.show()
