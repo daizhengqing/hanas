@@ -8,7 +8,7 @@
     .list
       Scrollbar
         .search-result(v-if="list.length > 0")
-          .item(v-for="item in list" :key="item.url" @click="onClick(item)")
+          .item(v-for="item in list" :key="item.url" @click="onItemClick(item)")
             .cover-container
               img(v-lazy="item.cover" :loading="require('@/assets/image/loading_cover.png')")
             span {{ item.name }}
@@ -56,7 +56,7 @@ export default {
 
       this.$renderer.send('search_comic', params)
     },
-    onClick (item) {
+    onItemClick (item) {
       this.$router.push({ path: '/details', query: item })
     },
     addListener () {
@@ -105,6 +105,7 @@ export default {
           margin-bottom: 5px;
           border-radius: 3px;
           background: rgba(0,0,0,.5);
+          display: flex;
         }
 
         img {

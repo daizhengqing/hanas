@@ -4,7 +4,7 @@ export default class Config {
   }
 
   get (evt, arg) {
-    this.app.mainWindow.webContents.send('getConfig', this.app.mainWindow.storage.config)
+    this.app.mainWindow.webContents.send('get_config', this.app.mainWindow.storage.config)
   }
 
   async set (evt, arg) {
@@ -14,6 +14,6 @@ export default class Config {
 
     const res = await this.app.mainWindow.storage.setItem(key, val, isFilePath)
 
-    this.app.mainWindow.webContents.send('getConfig', res)
+    this.app.mainWindow.webContents.send('get_config', res)
   }
 }

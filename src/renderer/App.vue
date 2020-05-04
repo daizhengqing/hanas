@@ -3,7 +3,7 @@
     AppHeader
       .header-nav(slot="right" v-if="$route.name !== 'reading'")
         span(@click="$router.push('/')") 首页
-        span 书架
+        span(@click="$router.push('/bookshelf')") 书架
         span 下载
         span(@click="$router.push('/setting')") 设置
     #app-layout
@@ -43,11 +43,11 @@
     },
 
     created () {
-      this.$renderer.on('getConfig', (evt, arg) => {
+      this.$renderer.on('get_config', (evt, arg) => {
         this.$store.commit('app/setConfig', arg)
       })
 
-      this.$renderer.send('getConfig')
+      this.$renderer.send('get_config')
     }
   }
 </script>

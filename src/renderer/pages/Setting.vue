@@ -14,7 +14,7 @@ export default {
       console.log(reset)
 
       if (reset) {
-        this.$renderer.send('setConfig', {
+        this.$renderer.send('set_config', {
           key: 'bg',
           val: null
         })
@@ -29,7 +29,7 @@ export default {
 
         const path = e.target.files[0].path
 
-        this.$renderer.send('setConfig', {
+        this.$renderer.send('set_config', {
           key: 'bg',
           val: path,
           isFilePath: true
