@@ -6,7 +6,9 @@ import appConfig from '../index.config.js'
 export default class Storage {
   constructor () {
     this.userData = path.join(app.getPath('userData'), 'config.json')
+
     this.config = {}
+
     console.log(this.userData)
   }
 
@@ -60,15 +62,13 @@ export default class Storage {
   }
 
   async setItem (key, value, isFilePath) {
-    console.log(key, value, isFilePath)
-
     return new Promise(async resolve => {
       if (isFilePath) {
-        const to = path.join(app.getPath('userData'), value.split('/').pop())
-
-        console.log(to)
+        const to = path.join(app.getPath('userData'), `bg-${Date.now()}-${value.match(/\.gif|\.jpeg|\.png|\.jpg|\.bmp/i)[0]}`)
 
         await this.cp(to, value)
+
+        if (this.config[key]) await this.rm(this.config[key])
 
         this.config[key] = to
 
@@ -85,11 +85,17 @@ export default class Storage {
     })
   }
 
+  rm (from) {
+    return new Promise(resolve => {
+      fs.unlink(from, (err, data) => {
+        if (!err) resolve()
+      })
+    })
+  }
+
   cp (to, from) {
     return new Promise(resolve => {
       fs.readFile(from, (err, data) => {
-        console.log(data)
-
         if (!err) {
           fs.writeFile(to, data, (err) => {
             if (!err) {

@@ -5,12 +5,12 @@
       button.setting-btn(@click="onChangeBackgroundBtnClick(false, $event)") 选择文件
       button.setting-btn(@click="onChangeBackgroundBtnClick(true, $event)") 恢复默认
       input(ref="bgSelect" type="file" style="display: none;")
-    .setting-item
-      span.setting-item-title 下载路径
-      mu-text-field(v-model="dp" disabled solo color="#fff")
-      button.setting-btn(@click="onChangeDownloadPathBtnClick(false, $event)") 选择文件夹
-      button.setting-btn(@click="onChangeDownloadPathBtnClick(true, $event)") 恢复默认
-      input(ref="dpSelect" directory webkitdirectory type="file" style="display: none;")
+    //- .setting-item
+    //-   span.setting-item-title 下载路径
+    //-   mu-text-field(v-model="dp" disabled solo color="#fff")
+    //-   button.setting-btn(@click="onChangeDownloadPathBtnClick(false, $event)") 选择文件夹
+    //-   button.setting-btn(@click="onChangeDownloadPathBtnClick(true, $event)") 恢复默认
+    //-   input(ref="dpSelect" directory webkitdirectory type="file" style="display: none;")
 </template>
 
 <script>

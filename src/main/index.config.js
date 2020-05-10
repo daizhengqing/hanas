@@ -34,7 +34,9 @@ export default {
     center: true,
 
     // 设置为false是启用一个无边框窗口
-    frame: true,
+    frame: process.env.OS !== 'Windows_NT',
+
+    // transparent: true,
 
     // 网页功能设置
     webPreferences: {

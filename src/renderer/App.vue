@@ -1,10 +1,10 @@
 <template lang="pug">
   #app(:style="style")
     AppHeader
-      .header-nav(slot="right" v-if="$route.name !== 'reading'")
+      .header-nav(:slot="frame ? 'right' : 'left'" v-if="$route.name !== 'reading'")
         span(@click="$router.push('/')") 首页
         span(@click="$router.push('/bookshelf')") 书架
-        span(@click="$router.push('/download')") 下载
+        //- span(@click="$router.push('/download')") 下载
         span(@click="$router.push('/setting')") 设置
     #app-layout
       #app-container
@@ -27,10 +27,14 @@
         return this.$store.state.app.config.bg
       },
 
+      frame () {
+        return this.$store.state.app.config.window.frame
+      },
+
       style () {
         if (this.bg) {
           return {
-            'background-image': `url('file://${this.bg}')`,
+            'background-image': `url('file://${this.bg.replace(/\\/g, '/')}')`,
             'background-size': 'cover',
             'background-position': 'unset'
           }

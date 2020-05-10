@@ -7,15 +7,11 @@ export default class Search {
   }
 
   async search (evt, arg) {
-    console.log(arg)
-
     arg.from.forEach(item => this[item](arg.page, arg.utf8Keyword, arg.big5Keyword))
   }
 
   async dmzj (p = 1, utf8Keyword, big5Keyword) {
     const url = encodeURI(`http://sacg.dmzj.com/comicsum/search.php?s=${utf8Keyword}&p=${p}`)
-
-    console.log(url)
 
     try {
       const res = await axios.get(url, {

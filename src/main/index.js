@@ -3,7 +3,8 @@
 import {
   app,
   BrowserWindow,
-  ipcMain
+  ipcMain,
+  Menu
 } from 'electron'
 import Storage from './app/storage.js'
 import HANAs from './app/index'
@@ -23,6 +24,8 @@ const winURL = process.env.NODE_ENV === 'development'
   : `file://${__dirname}/index.html`
 
 async function createWindow () {
+  Menu.setApplicationMenu(null)
+
   await storage.init()
 
   mainWindow = new BrowserWindow(storage.config.window)
