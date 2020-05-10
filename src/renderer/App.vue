@@ -4,7 +4,7 @@
       .header-nav(slot="right" v-if="$route.name !== 'reading'")
         span(@click="$router.push('/')") 首页
         span(@click="$router.push('/bookshelf')") 书架
-        span 下载
+        span(@click="$router.push('/download')") 下载
         span(@click="$router.push('/setting')") 设置
     #app-layout
       #app-container

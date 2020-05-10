@@ -38,21 +38,16 @@ export default new Router({
       name: '书架',
       component: require('@/pages/BookShelf').default
     },
-    // {
-    //   path: '/download',
-    //   name: '下载',
-    //   component: require('@/pages/Download').default
-    // },
+    {
+      path: '/download',
+      name: '下载',
+      component: require('@/pages/Download').default
+    },
     {
       path: '/setting',
       name: 'setting',
       component: require('@/pages/Setting').default
     },
-    // {
-    //   path: '/tray',
-    //   name: '托盘',
-    //   component: require('@/pages/Tray').default
-    // },
     {
       path: '*',
       redirect: '/'

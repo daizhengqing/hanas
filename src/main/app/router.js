@@ -1,4 +1,4 @@
-import { ipcMain } from 'electron'
+import { app, ipcMain } from 'electron'
 export default class Router {
   constructor (options) {
     this.app = options
@@ -14,5 +14,6 @@ export default class Router {
     ipcMain.on('get_chapter', (evt, arg) => { this.app.service.chapter.get(evt, arg) })
     ipcMain.on('get_config', () => { this.app.service.config.get() })
     ipcMain.on('set_config', (evt, arg) => { this.app.service.config.set(evt, arg) })
+    ipcMain.on('get_default_dp', (evt, arg) => { evt.returnValue = app.getPath('downloads') })
   }
 }

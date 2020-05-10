@@ -37,7 +37,10 @@ export default class Storage {
   }
 
   async create () {
-    const defaultConfig = JSON.stringify(appConfig)
+    const defaultConfig = JSON.stringify({
+      ...appConfig,
+      dp: app.getPath('downloads')
+    })
 
     return new Promise((resolve) => {
       fs.writeFile(this.userData, defaultConfig, (err, data) => {

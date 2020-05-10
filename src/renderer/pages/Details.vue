@@ -3,7 +3,12 @@
     .nav
       span(@click="$router.back()") 返回
       span(style="margin-left: 10px;" @click="onCollectBtnClick") {{ hasBook ? '取消收藏' : '收藏到我的书架' }}
-      span(style="margin-left: 10px;") 下载
+      span(style="margin-left: 10px; position: relative; display: inline-block;" @click="showDownloadList = !showDownloadList") 下载
+        //- Scrollbar.d-list-cont(v-show="true")
+        //-   .d-list(v-model="radioGroup")
+        //-     .d-list-item(v-for="item in list" :key="item.title")
+        //-       mu-checkbox(color="#fff" :value="item" v-model="downloadList" :label="item.title")
+
     .info
       .info-img
         img(:src="data.cover")
@@ -28,7 +33,8 @@
       return {
         list: [],
         isDownload: false,
-        downloadList: []
+        downloadList: [],
+        showDownloadList: false
       }
     },
 
@@ -145,6 +151,27 @@
       }
     }
 
+    // .d-list-cont {
+    //   position: absolute;
+    //   left: 0px;
+    //   width: 300px;
+    //   height: 240px;
+    //   background: rgba(0, 0, 0, .7);
+    //   z-index: 999;
+    // }
+
+    // .d-list {
+    //   display: grid;
+    //   grid-gap: 0;
+    //   grid-template-columns: repeat(auto-fill, minmax(80px, 11fr));
+    //   padding: 10px;
+    // }
+
+    // .d-list-item {
+    //   text-align: center;
+    //   padding: 5px 0;
+    // }
+
     /deep/ .vm-scrollbar {
       flex: 1;
     }
@@ -156,6 +183,14 @@
 
     /deep/ .vm-scrollbar__view {
       height: 100%;
+    }
+
+    /deep/ .mu-checkbox {
+      color: #fff;
+    }
+
+    /deep/ .mu-checkbox-label {
+      color: #fff;
     }
 
     .chapter-list {
