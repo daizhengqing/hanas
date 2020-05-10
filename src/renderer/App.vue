@@ -1,6 +1,6 @@
 <template lang="pug">
   #app(:style="style")
-    AppHeader
+    AppHeader(v-show="show")
       .header-nav(:slot="frame ? 'right' : 'left'" v-if="$route.name !== 'reading'")
         span(@click="$router.push('/')") 首页
         span(@click="$router.push('/bookshelf')") 书架
@@ -22,13 +22,19 @@
 
     components: { AppHeader, AppAside, AppLoading },
 
+    data () {
+      return {
+        show: false
+      }
+    },
+
     computed: {
       bg () {
         return this.$store.state.app.config.bg
       },
 
       frame () {
-        return this.$store.state.app.config.window.frame
+        try { return this.$store.state.app.config.window.frame } catch (err) { return false }
       },
 
       style () {
@@ -48,6 +54,8 @@
 
     created () {
       this.$renderer.on('get_config', (evt, arg) => {
+        this.show = true
+
         this.$store.commit('app/setConfig', arg)
       })
 
