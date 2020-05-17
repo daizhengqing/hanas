@@ -1,42 +1,43 @@
-<template lang="pug">
-  .loading(v-show="loading")
-    .loading-text ...少女祈祷中
+<template>
+  <div class="loader loader--style6" title="5">
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+      width="24px" height="30px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+      <rect x="0" y="13" width="4" height="5" fill="#333">
+        <animate attributeName="height" attributeType="XML"
+          values="5;21;5" 
+          begin="0s" dur="0.6s" repeatCount="indefinite" />
+        <animate attributeName="y" attributeType="XML"
+          values="13; 5; 13"
+          begin="0s" dur="0.6s" repeatCount="indefinite" />
+      </rect>
+      <rect x="10" y="13" width="4" height="5" fill="#333">
+        <animate attributeName="height" attributeType="XML"
+          values="5;21;5" 
+          begin="0.15s" dur="0.6s" repeatCount="indefinite" />
+        <animate attributeName="y" attributeType="XML"
+          values="13; 5; 13"
+          begin="0.15s" dur="0.6s" repeatCount="indefinite" />
+      </rect>
+      <rect x="20" y="13" width="4" height="5" fill="#333">
+        <animate attributeName="height" attributeType="XML"
+          values="5;21;5" 
+          begin="0.3s" dur="0.6s" repeatCount="indefinite" />
+        <animate attributeName="y" attributeType="XML"
+          values="13; 5; 13"
+          begin="0.3s" dur="0.6s" repeatCount="indefinite" />
+      </rect>
+    </svg>
+  </div>
 </template>
 
-<script>
-export default {
-  computed: {
-    loading () {
-      return this.$store.state.app.loading
-    }
-  }
-}
-</script>
-
-<style lang="scss">
-  .loading {
-    position: fixed;
+<style>
+  .loader {
     width: 100%;
-    height: 100%;
-    top: 0;
-    background: rgba(0, 0, 0, .7);
+    text-align: center;
   }
 
-  .loading-text {
-    position: fixed;
-    bottom: 0;
-    color: #fff;
-    right: 0;
-    font-size: 18px;
-    letter-spacing: 2px;
-    padding-right: 10px;
-    line-height: 35px;
-    animation: color 2s ease infinite;
-  }
-
-  @keyframes color {
-    0% { opacity: .2; }
-    50% { opacity: 1; }
-    100% { opacity: .2;}
+  svg path,
+  svg rect{
+    fill: #fff;
   }
 </style>

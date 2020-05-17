@@ -11,6 +11,7 @@ export default class ImageServer {
     const router = new Router()
 
     router.get('/image/dmzj', ctx => this.dmzjImage(ctx))
+    router.get('/image/comic8Cover', ctx => this.comic8Cover(ctx))
 
     server.use(router.routes())
     server.use(router.allowedMethods())
@@ -29,6 +30,21 @@ export default class ImageServer {
     } else {
       const res = await this.app.service.images.dmzj(encodeURI(url))
 
+      ctx.set('Cache-Control', `max-age=${2 * 3600}`)
+      ctx.body = res.data
+    }
+  }
+
+  async comic8Cover (ctx) {
+    const url = ctx.query.url
+
+    if (!url) {
+      ctx.status = 404
+      ctx.body = 'url not found'
+    } else {
+      const res = await this.app.service.images.comic8Cover(encodeURI(url))
+
+      ctx.set('Cache-Control', `max-age=${2 * 3600}`)
       ctx.body = res.data
     }
   }

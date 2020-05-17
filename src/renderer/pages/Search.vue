@@ -2,9 +2,8 @@
   .search-container
     .nav
       mu-tabs(:value.sync="active" inverse color="rgba(255,255,255,.9)" indicator-color="rgba(255, 255, 255, .8)" center)
-        mu-tab(:value="0") 动漫之家
-        mu-tab(:value="1") 无限动漫
-        mu-tab(:value="2") 虎虎漫画
+        mu-tab(value="dmzj") 动漫之家
+        mu-tab(value="comic8") 无限动漫
     .list
       Scrollbar
         .search-result(v-if="list.length > 0")
@@ -12,26 +11,35 @@
             .cover-container
               img(v-lazy="item.cover" :loading="require('@/assets/image/loading_cover.png')")
             span {{ item.name }}
+        //- div(v-loading="true")
+        //-   Loading
 </template>
 
 <script>
 import Scrollbar from 'vue-multiple-scrollbar'
 import DmzjWorker from '../worker/dmzj.worker.js'
 import { urlEncode } from '@/utils/index'
+import Loading from '@/components/Loading'
 
 export default {
-  components: { Scrollbar },
+  components: { Scrollbar, Loading },
   data () {
     return {
-      active: 0,
+      active: 'dmzj',
       isShow: false,
       selected: null,
-      list: []
+      storage: {
+        comic8: [],
+        dmzj: []
+      }
     }
   },
   computed: {
     keyword () {
       return this.$route.query.keyword
+    },
+    list () {
+      return this.storage[this.active]
     }
   },
   created () {
@@ -43,6 +51,7 @@ export default {
   },
   beforeDestroy () {
     this.$renderer.removeAllListeners('dmzj_search_complete')
+    this.$renderer.removeAllListeners('comic8_search_complete')
   },
   methods: {
     async search () {
@@ -51,7 +60,7 @@ export default {
       const params = {
         utf8Keyword: this.keyword,
         big5Keyword,
-        from: ['dmzj']
+        from: ['comic8']
       }
 
       this.$renderer.send('search_comic', params)
@@ -61,6 +70,7 @@ export default {
     },
     addListener () {
       this.$renderer.on('dmzj_search_complete', this.onDmzjSearchComplete)
+      this.$renderer.on('comic8_search_complete', this.onComic8SearchComplete)
     },
     onDmzjSearchComplete (evt, arg) {
       if (arg.state) {
@@ -70,6 +80,9 @@ export default {
       } else {
         this.$toasted.error(arg.message)
       }
+    },
+    onComic8SearchComplete (evt, arg) {
+      if (arg.state) this.storage.comic8.push(...arg.data)
     }
   }
 }

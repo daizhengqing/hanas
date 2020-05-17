@@ -113,7 +113,6 @@ export default {
     async getCharpter () {
       const params = {
         url: this.current.url,
-
         target: this.current.fromType
       }
 

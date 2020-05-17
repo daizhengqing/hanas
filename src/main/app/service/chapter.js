@@ -2,6 +2,8 @@
 /* eslint-disable no-eval */
 /* eslint-disable no-undef */
 import axios from 'axios'
+import iconv from 'iconv-lite'
+import cheerio from 'cheerio'
 
 export default class Chapter {
   constructor (options) {
@@ -37,8 +39,8 @@ export default class Chapter {
     }
   }
 
-  async comic8 (referer = 'https://www.comicbus.com/') {
-    const url = 'https://www.comicbus.com/html/14132.html'
+  async comic8 (url, ch = null, total = null, referer = 'https://www.comicbus.com/') {
+    if (!ch) ch = url.replace(/.*=/, '')
 
     try {
       const res = await axios.get(url, {
@@ -63,32 +65,76 @@ export default class Chapter {
         ]
       })
 
-      const decode = (url, id, r) => {
-        url = url.replace(".html","").replace("-",".html?ch=")
+      console.time()
 
-        if (r === '1') {
-          return `https://comicbus.live/online/comic-${url}`
-        } else {
-          return `https://comicbus.live/online/manga_${url}`
+      /* eslint-disable */
+      const $ = cheerio.load(res.data)
+
+      const target = $(Array.from($('script')).sort((a, b) => { return $(a).html().length - $(b).html().length }).pop()).html()
+
+      const src = (function (target) {
+        var y = 46
+
+        function su(a, b, c){
+          var e = (a + '').substring(b, b + c)
+
+          return (e)
+        }
+
+        function nn(n) {
+          return n < 10 ? '00' + n : n < 100 ? '0' + n : n;
+        }
+
+        function mm(p){
+          return (parseInt((p - 1) / 10) % 10 )+(((p - 1) % 10) * 3)
+        };
+
+        function lc(l){
+          if(l.length != 2) return l;
+          var az = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+          var a = l.substring(0,1);
+          var b = l.substring(1,2);
+          if( a == "Z") return 8000 + az.indexOf(b);
+          else return az.indexOf(a) * 52 + az.indexOf(b);
+        }
+
+        function spp () {}
+
+        target = target.replace(/ge\('TheImg'\)\./, 'var ')
+
+        target = target.replace(/request\('ch'\)/, "'155'")
+
+        var document = {
+          getElementById () {}
+        }
+
+        eval(target)
+
+        return src
+      })(target)
+
+      const list = []
+
+      if (!total) {
+        total = $('#pagenum').text().match(/\/\d*/)[0].replace(/\//, '') >>> 0
+
+        for (let i = 2; i < total; i++) {
+          const res = await this.comic8(`${url}-${i}`, ch, total)
+
+          list.push(res)
         }
       }
 
-      console.time()
+      console.log(list)
 
-      const $ = cheerio.load(res.data)
-
-      const list = $('#div_li1 td a')
-
-      const data = list.map(function(i, item) {
-        return {
-          title: $(item).text().replace('\n ', ''),
-          link: decode(...$(item).attr('onclick').match(/[0-9].*(?=\))/ig)[0].split(','))
-        }
-      })
-
-      console.log(data.toArray())
+      console.log('saaaaaaaaaaaaaaaaa', src)
 
       console.timeEnd()
+
+      return total
+        ? list
+        : src
+      /* eslint-enable */
     } catch (err) {
       console.log(err)
     }
