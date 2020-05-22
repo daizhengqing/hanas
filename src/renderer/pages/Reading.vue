@@ -15,7 +15,6 @@
         .m-list
           .list-item(v-for="item in chapterList" :key="item.title" @click="onChapterSelect(item)")
             span {{ item.title }}
-      //- span 阅读设置
 </template>
 
 <script>
@@ -91,8 +90,6 @@ export default {
         this.AnalysisWorker.postMessage([arg.data, arg.type])
 
         this.AnalysisWorker.onmessage = e => {
-          console.log(e)
-
           if (e.data.state) {
             this.show = false
 
@@ -174,7 +171,6 @@ export default {
   height: 100%;
   background: #000;
   z-index: 100;
-  // overflow: hidden;
 
   .item {
     text-align: center;

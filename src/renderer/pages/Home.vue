@@ -12,8 +12,6 @@
 </template>
 
 <script>
-  // import { urlEncode } from '@/utils/index'
-
   export default {
     name: 'home',
     data () {
@@ -26,30 +24,6 @@
         if (this.keyword === '') return
 
         this.$router.push(`/search?keyword=${this.keyword}`)
-
-        // const big5Keyword = await urlEncode(this.keyword, 'big5')
-
-        // const params = {
-        //   utf8Keyword: this.keyword,
-        //   big5Keyword,
-        //   from: ['dmzj', 'comic8']
-        // }
-
-        // this.$store.commit('app/setLoadingState', true)
-
-        // this.$renderer.send('search_comic', params)
-
-        // this.$renderer.once('search_complete', (evt, arg) => {
-        //   if (arg.state) {
-        //     this.list = arg.data[0]
-
-        //     this.list.length === 0 ? this.$toasted.show('( ´◔ ‸◔`) 没找到你想搜的漫画') : ''
-        //   } else {
-        //     this.$toasted.error(arg.message)
-        //   }
-
-        //   this.$store.commit('app/setLoadingState', false)
-        // })
       }
     }
   }

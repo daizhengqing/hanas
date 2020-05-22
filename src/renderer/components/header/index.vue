@@ -6,11 +6,11 @@
       slot(name="center")
     .header-right
       slot(name="right")
-      mu-button.button(flat @click="onMinButtonClick")
+      mu-button.button(v-if="!frame" flat @click="onMinButtonClick")
         mu-icon(value="minimize")
-      mu-button.button(flat @click="onFullScreenButtonClick")
+      mu-button.button(v-if="!frame" flat @click="onFullScreenButtonClick")
         mu-icon(:value="!fullScreen ? 'fullscreen' : 'fullscreen_exit'")
-      mu-button.button(flat @click="onCloseButtonClick")
+      mu-button.button(v-if="!frame" flat @click="onCloseButtonClick")
         mu-icon(value="close")
 </template>
 
@@ -20,6 +20,11 @@ export default {
   data () {
     return {
       fullScreen: false
+    }
+  },
+  computed: {
+    frame () {
+      try { return this.$store.state.app.config.window.frame } catch (err) { return false }
     }
   },
   mounted () {

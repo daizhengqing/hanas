@@ -9,7 +9,7 @@ export default class Storage {
 
     this.config = {}
 
-    console.log(this.userData)
+    console.log('User Data Path', this.userData)
   }
 
   async init () {

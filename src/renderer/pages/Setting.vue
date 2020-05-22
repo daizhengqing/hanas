@@ -11,6 +11,10 @@
     //-   button.setting-btn(@click="onChangeDownloadPathBtnClick(false, $event)") 选择文件夹
     //-   button.setting-btn(@click="onChangeDownloadPathBtnClick(true, $event)") 恢复默认
     //-   input(ref="dpSelect" directory webkitdirectory type="file" style="display: none;")
+    //- .setting-item
+    //-   span.setting-item-title 动漫之家
+    //- .setting-item
+    //-   span.setting-item-title 无限动漫
 </template>
 
 <script>
@@ -126,5 +130,12 @@ export default {
       color: #fff;
       padding-right: 20px;
     }
+  }
+
+  .setting-title {
+    margin-top: 50px;
+    border-bottom: 1px solid #fff;
+    line-height: 28px;
+    font-size: 15px;
   }
 </style>

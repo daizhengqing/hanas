@@ -7,7 +7,7 @@ export default {
     // 标题
     title: 'Hanas',
 
-    titleBarStyle: 'hiddenInset',
+    titleBarStyle: 'hidden',
 
     // 窗口颜色
     backgroundColor: '#333',

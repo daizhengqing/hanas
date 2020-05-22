@@ -11,8 +11,6 @@
             .cover-container
               img(v-lazy="item.cover" :loading="require('@/assets/image/loading_cover.png')")
             span {{ item.name }}
-        //- div(v-loading="true")
-        //-   Loading
 </template>
 
 <script>
@@ -60,7 +58,7 @@ export default {
       const params = {
         utf8Keyword: this.keyword,
         big5Keyword,
-        from: ['comic8']
+        from: ['dmzj']
       }
 
       this.$renderer.send('search_comic', params)
@@ -74,15 +72,21 @@ export default {
     },
     onDmzjSearchComplete (evt, arg) {
       if (arg.state) {
-        this.list = arg.data
+        this.storage.dmzj.push(...arg.data)
 
-        this.list.length === 0 ? this.$toasted.show('( ´◔ ‸◔`) 没找到你想搜的漫画') : ''
+        arg.data.length === 0 ? this.$toasted.show('( ´◔ ‸◔`) 没找到你想搜的漫画') : ''
       } else {
         this.$toasted.error(arg.message)
       }
     },
     onComic8SearchComplete (evt, arg) {
-      if (arg.state) this.storage.comic8.push(...arg.data)
+      if (arg.state) {
+        this.storage.comic8.push(...arg.data)
+
+        arg.data.length === 0 ? this.$toasted.show('( ´◔ ‸◔`) 没找到你想搜的漫画') : ''
+      } else {
+        this.$toasted.error(arg.message)
+      }
     }
   }
 }
