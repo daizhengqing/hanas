@@ -15,6 +15,7 @@
       .info-item 名称：{{ data.name }}
       .info-item 作者：{{ data.author }}
       .info-item 最近：{{ data.last }}
+      .info-item 上次看到：{{ history || '未观看' }}
     Scrollbar
       .chapter-list
         .list-item(v-for="item in list" :key="item.title" @click="onItemBtnClick(item)")
@@ -34,7 +35,8 @@
         list: [],
         isDownload: false,
         downloadList: [],
-        showDownloadList: false
+        showDownloadList: false,
+        history: null
       }
     },
 
@@ -53,11 +55,17 @@
     created () {
       this.$renderer.on('get_list_complete', this.onGetListComplete)
 
+      window.addEventListener('message', this.updateHistory)
+
+      this.getHistory()
+
       this.getList()
     },
 
     beforeDestroy () {
       this.$renderer.removeAllListeners('get_list_complete')
+
+      window.removeEventListener('message', this.updateHistory)
     },
 
     methods: {
@@ -65,6 +73,32 @@
         const { fromType: target, url } = this.data
 
         this.$renderer.send('get_list', { target, url })
+      },
+
+      getHistory () {
+        const history = JSON.parse(localStorage.getItem('readingHistory'))
+
+        const { from, name } = this.data
+
+        const key = `${from}-${name}`
+
+        this.history = history
+          ? history[key]
+          : null
+      },
+
+      updateHistory (event) {
+        const { channel, key, value } = event.data
+
+        if (channel === 'updateHistory') {
+          const history = JSON.parse(localStorage.getItem('readingHistory')) || {}
+
+          history[key] = value
+
+          this.history = value
+
+          localStorage.setItem('readingHistory', JSON.stringify(history))
+        }
       },
 
       onGetListComplete (evt, arg) {

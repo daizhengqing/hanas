@@ -75,6 +75,8 @@ export default {
       this.getCharpter()
 
       this.$toasted.show('Tips: 图片加载过慢可以右键刷新它哦')
+
+      this.updateHistory()
     })
 
     window.opener.postMessage('loaded')
@@ -85,6 +87,20 @@ export default {
   },
 
   methods: {
+    updateHistory () {
+      const { from, name } = this.comic
+
+      const { title: value } = this.current
+
+      const key = `${from}-${name}`
+
+      window.opener.postMessage({
+        channel: 'updateHistory',
+        key,
+        value
+      })
+    },
+
     getCharpterComplete (evt, arg) {
       if (arg.state) {
         this.AnalysisWorker.postMessage([arg.data, arg.type])
