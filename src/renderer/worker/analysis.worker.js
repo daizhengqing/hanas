@@ -5,6 +5,8 @@
 onmessage = function (e) {
   this.dmzj = dmzj
 
+  this.comic8 = comic8
+
   this[e.data[1]](e.data[0])
 }
 
@@ -36,4 +38,11 @@ function dmzj (data) {
       message: err.message
     })
   }
+}
+
+function comic8 (data) {
+  postMessage({
+    state: true,
+    data
+  })
 }

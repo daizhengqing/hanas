@@ -12,6 +12,7 @@ export default class ImageServer {
 
     router.get('/image/dmzj', ctx => this.dmzjImage(ctx))
     router.get('/image/comic8Cover', ctx => this.comic8Cover(ctx))
+    router.get('/image/comic8', ctx => this.comic8(ctx))
 
     server.use(router.routes())
     server.use(router.allowedMethods())
@@ -33,6 +34,15 @@ export default class ImageServer {
       ctx.set('Cache-Control', `max-age=${2 * 3600}`)
       ctx.body = res.data
     }
+  }
+
+  async comic8 (ctx) {
+    const { url, ch, p } = ctx.query
+
+    const res = await this.app.service.images.comic8(url, ch, p)
+
+    ctx.set('Cache-Control', `max-age=${2 * 3600}`)
+    ctx.body = res.data
   }
 
   async comic8Cover (ctx) {

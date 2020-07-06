@@ -15,7 +15,6 @@
 
 <script>
 import Scrollbar from 'vue-multiple-scrollbar'
-import DmzjWorker from '../worker/dmzj.worker.js'
 import { urlEncode } from '@/utils/index'
 import Loading from '@/components/Loading'
 
@@ -41,8 +40,6 @@ export default {
     }
   },
   created () {
-    this.DmzjWorker = new DmzjWorker()
-
     this.addListener()
 
     this.search()
@@ -58,7 +55,7 @@ export default {
       const params = {
         utf8Keyword: this.keyword,
         big5Keyword,
-        from: ['dmzj']
+        from: ['dmzj', 'comic8']
       }
 
       this.$renderer.send('search_comic', params)

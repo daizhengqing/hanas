@@ -45,9 +45,7 @@ export default class Images {
     }
   }
 
-  async comic8 (url, type, referer = 'https://www.comicbus.com/') {
-    // const url = 'https://comicbus.live/online/manga_6769.html?ch=155'
-
+  async comic8 (url, ch, p, referer = 'https://www.comicbus.com/') {
     try {
       const res = await axios.get(url, {
         headers: {
@@ -71,102 +69,73 @@ export default class Images {
         ]
       })
 
-      console.time()
-
+      /* eslint-disable */
       const $ = cheerio.load(res.data)
 
       const target = $(Array.from($('script')).sort((a, b) => { return $(a).html().length - $(b).html().length }).pop()).html()
 
-      /* eslint-disable */
-      const src = (function (target) {
+      let src = (function (target) {
         var y = 46
 
-        function su (a, b, c) {
+        function su(a, b, c){
           var e = (a + '').substring(b, b + c)
 
           return (e)
         }
 
-        function nn (n) {
+        function nn(n) {
           return n < 10 ? '00' + n : n < 100 ? '0' + n : n;
         }
 
-        function mm (p) {
+        function mm(p){
           return (parseInt((p - 1) / 10) % 10 )+(((p - 1) % 10) * 3)
         };
 
-        function lc (l) {
-          if (l.length !== 2) return l
-
-          var az = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
-          var a = l.substring(0, 1)
-
-          var b = l.substring(1, 2)
-
-          if (a === 'Z') return 8000 + az.indexOf(b)
-
-          else return az.indexOf(a) * 52 + az.indexOf(b)
+        function lc(l){
+          if(l.length != 2) return l;
+          var az = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+          var a = l.substring(0,1);
+          var b = l.substring(1,2);
+          if( a == "Z") return 8000 + az.indexOf(b);
+          else return az.indexOf(a) * 52 + az.indexOf(b);
         }
 
-        eval(target.match(/var p.*?;/)[0])
+        function spp () {}
 
-        eval(target.match(/var ti.*?;/)[0])
+        target = target.replace(/ge\('TheImg'\)\./, 'var ')
 
-        eval(target.match(/var cs.*?;/)[0])
+        target = target.replace(/request\('ch'\)/, `'${ch}-${p}'`)
 
-        eval(target.match(/var i.*?;/)[0])
-
-        // eval(target.match(/var rjomc.*?;/)[0])
-
-        // console.log(rjomc)
-
-        // eval(target.match(/var bepdh.*?;/)[0])
-
-        // console.log(bepdh)
-
-        // eval(target.match(/var rniba.*?;/)[0])
-
-        // console.log(rniba)
-       
-        for (var i = 0; i < 127; i++) {
-          var bepdh = lc(su(cs, i * y + 0, 2))
-
-          var rniba = lc(su(cs, i * y + 2, 2))
-
-          var rjomc = lc(su(cs, i * y + 6, 40))
-
-          if (rniba === 155) {
-            var src = '//img' + su(bepdh, 0, 1) + '.8comic.com/' + su(bepdh , 1 ,1) + '/' + ti + '/' + rniba + '/' + nn(p) + '_' + su(rjomc, mm(p), 3)+ '.jpg';
-
-            break
-          }
+        var document = {
+          getElementById () {}
         }
 
-        return src
+        var url
+
+        eval(target + "url = src")
+
+        return url
       })(target)
 
-      console.log(src)
-      /* eslint-enable */
+      console.log(`http:${src}`)
 
-      const image = await axios.get('https:' + src, {
+      const response = await axios.get(`http:${src}`, {
         headers: {
-          'Host': 'img8.8comic.com',
+          'Host': src.match(/img.*com/)[0],
           'Accept': 'image/webp,*/*',
           'Accept-Language': 'zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2',
           'Accept-Encoding': 'gzip, deflate, br',
-          'Referer': 'https://comicbus.live/online/manga_6769.html?ch=155',
+          'Referer': referer,
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:73.0) Gecko/20100101 Firefox/73.0',
           'Cookie': 'RI=0'
         },
-        responseType: 'arraybuffer'
+        responseType: 'stream'
       })
 
-      console.log(image.data)
-
-      console.timeEnd()
+      return response
+      /* eslint-enable */
     } catch (err) {
-      console.log(err)
+      throw new Error(err)
     }
   }
 

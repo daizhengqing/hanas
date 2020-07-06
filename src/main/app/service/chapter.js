@@ -11,8 +11,6 @@ export default class Chapter {
   }
 
   async get (evt, arg) {
-    console.log(evt, arg)
-
     try {
       const data = await this[arg.target](encodeURI(arg.url))
 
@@ -39,8 +37,8 @@ export default class Chapter {
     }
   }
 
-  async comic8 (url, ch = null, total = null, referer = 'https://www.comicbus.com/') {
-    if (!ch) ch = url.replace(/.*=/, '')
+  async comic8 (url, ch = null, p = 1, referer = 'https://www.comicbus.com/') {
+    if (!ch) ch = url.replace(/.*=/, '').replace(/'/, '')
 
     try {
       const res = await axios.get(url, {
@@ -65,14 +63,12 @@ export default class Chapter {
         ]
       })
 
-      console.time()
-
       /* eslint-disable */
       const $ = cheerio.load(res.data)
 
       const target = $(Array.from($('script')).sort((a, b) => { return $(a).html().length - $(b).html().length }).pop()).html()
 
-      const src = (function (target) {
+      let [src, total] = (function (target) {
         var y = 46
 
         function su(a, b, c){
@@ -102,41 +98,36 @@ export default class Chapter {
 
         target = target.replace(/ge\('TheImg'\)\./, 'var ')
 
-        target = target.replace(/request\('ch'\)/, "'155'")
+        target = target.replace(/request\('ch'\)/, `'${ch}-${p}'`)
 
         var document = {
           getElementById () {}
         }
 
-        eval(target)
+        var url, total
 
-        return src
+        eval(target + "url = src; total = ps")
+
+        return [url, total]
       })(target)
 
-      const list = []
+      const list = [
+        src
+      ]
 
-      if (!total) {
-        total = $('#pagenum').text().match(/\/\d*/)[0].replace(/\//, '') >>> 0
+      console.log(url)
 
+      if (p === 1) {
         for (let i = 2; i < total; i++) {
-          const res = await this.comic8(`${url}-${i}`, ch, total)
-
-          list.push(res)
+          list.push(`http://localhost:3054/image/comic8?url=${url.replace(/'/, '')}-${i}&ch=${ch}&p=${i}`)
         }
+
+        return list
       }
-
-      console.log(list)
-
-      console.log('saaaaaaaaaaaaaaaaa', src)
-
-      console.timeEnd()
-
-      return total
-        ? list
-        : src
-      /* eslint-enable */
+      /* eslint-enablconsole.log(err)e */
     } catch (err) {
       console.log(err)
+      throw new Error(err)
     }
   }
 }

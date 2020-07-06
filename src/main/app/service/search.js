@@ -77,8 +77,6 @@ export default class Search {
         ]
       })
 
-      console.time()
-
       const $ = cheerio.load(res.data)
 
       const list = $('td[colspan="2"] tr')
@@ -90,7 +88,8 @@ export default class Search {
         const name = $(this).find('b').text()
 
         return {
-          cover: `http://localhost:3054/image/comic8Cover?url=https://comicbus.com${cover}`,
+          // cover: `http://localhost:3054/image/comic8Cover?url=https://comicbus.com${cover}`,
+          cover: `https://comicbus.com${cover}`,
           last,
           url,
           name,

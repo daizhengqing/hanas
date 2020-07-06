@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HanaS</title>
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+            color: #333;
+        }
+
+        .fp {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999;
+        }
+
+        .animation {
+            animation: fade 2.5s linear forwards;
+        }
+
+        .fp h3 {
+            font-size: 30px;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        .fp p {
+            font-size: 14px;
+            margin-right: -30px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        @keyframes fade {
+            0% { opacity: 0; }
+            30% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .content {
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s linear;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .left {
+            width: 500px;
+            height: 100%;
+        }
+
+        .left img {
+            height: 100%;
+        }
+
+        .right {
+            width: calc(100% - 500px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<script>
+    window.onload = () => {
+        const text = [
+            { t: '「至少对自己的梦, 要率直啊」', f: 'AKB49' },
+            { t: '「所谓的自由, 是什么意思? 就是不怕孤独」', f: '结界师' },
+            { t: '「即使脚折断了, 心也是不会折断的」', f: 'AKB49' },
+            { t: '「些许的勇气既是真正的魔法」', f: '魔法先生' },
+            { t: '「即使无法做到100%的完美, 也要拿出100%的努力去做」', f: 'AKB49' },
+            { t: '「恋爱的季节, 是两个人邂逅的那个瞬间」', f: 'AKB49' },
+            { t: '「再也没有你的春天, 就要来了」', f: '四月是你的谎言' },
+            { t: '「或许前路永夜，我也会继续前行，因为即使星光微弱, 也会为我照亮前行的道路」', f: '四月是你的谎言' },
+            { t: '「就算须臾片刻也好, 你是否会想起我呢?」', f: '四月是你的谎言' },
+            { t: '「笑是对身边的事物感到一瞬间的幸福而表现出来的东西」', f: 'CLANNAD' },
+            { t: '「没有自信的人, 即使努力也没有价值」', f: 'NARUTO' },
+            { t: '「有形的东西迟早会凋零, 但只有回忆是永远不会凋零的」', f: 'NARUTO' },
+            { t: '「我也想, 让心脏扑通扑通尽情的跳啊!」', f: '女朋友, 借我一下' },
+        ]
+
+        const show = text[Math.floor(Math.random() * text.length)]
+
+        document.querySelector('#t').innerHTML = show.t
+
+        document.querySelector('#f').innerHTML = show.f
+
+        const fp = document.querySelector('.fp')
+
+        const cont = document.querySelector('.content')
+
+        fp.className += ' animation'
+
+        fp.addEventListener('animationend', e => {
+            e.target.style.display = 'none'
+
+            cont.style.opacity = 1
+        })
+    }
+</script>
+<body>
+    <div class="fp">
+        <section>
+            <h3 id="t"></h3>
+            <p id="f"></p>
+        </section>
+    </div>
+
+    <div class="content">
+        <div class="left">
+            <img src="./img/left.jpg" alt="">
+        </div>
+
+        <div class="right">
+            <div style="text-align: center;">
+                <h2>HanaS</h2>
+                <h4>快乐的记忆与流过的眼泪，正是因为有大家在这些才有意义</h4>
+                <p>Version 1.0.0</p>
+                <h4>Download</h4>
+                <a href="www.baidu.com">Windows</a>
+                <a href="www.baidu.com" style="margin-left: 30px;">MacOS</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -82,12 +82,15 @@ export default {
     }
 
     .header-left {
-      @extend %no-drag;
       width: $app-side-width;
       text-align: left;
       padding-left: 16px;
       font-size: 17px;
       letter-spacing: 1px;
+    }
+
+    .header-left * {
+      @extend %no-drag;
     }
 
     .header-center {
