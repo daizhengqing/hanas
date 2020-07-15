@@ -1,0 +1,29 @@
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1594819682335'); /* IE9 */
+  src: url('iconfont.eot?t=1594819682335#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAARIAAsAAAAACJQAAAP8AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDHAqEVINuATYCJAMQCwoABCAFhG0HQhtaBxEVnJvJvsC24Q0AdeIg4jajtUYLDa877IAEEigAAAAAIHiq/crX0/335ggVU4AAVTyrVCQC6B1Yl682QGqwD5OVnpib+zZ1VoKxw6LSP4fGrg+04W6QE1ZOVgqwAacUAA0U2MDDDQjM/f9/rsm35ANbfTubY0Ra5/OjvQGOonVgUUmtA90AcSIbxq68iPUQIIpMypFWbbyDER7D6CaATBqfloDwKQ1WgwpeHioZa8g2Arxb7x6Brf735Ss1xIMjUIyNuo1xSUY0e1/0tq6VYQzS5SwbzwSwSaBAOWAg40otI9DQV44SpTQ26gAej4Oxaro+rIePeHuReFNC3x+eAwlhSGIguZZYT4xrY1D4IAaBD9PgINE6eyAOOA68BeT0eI/DegQGmh9jL1+4kUBg2b1gAEIil5fu3DycfIhc3mLDELpVVr7Q3AqaJwqvGpwilt0/unxVe1YamGzel+zfFxXdAICgiMjuObTk/r2tFjExlu0SJRJl+UPSIBgCQBWHqvE2JvA0MGVWNVk5YwZNgjMlAN5+Ee+8TXS9xNdqJhoSqX0vSH2vCAUzJJcZggOADyYQhqyQZDfx2rN4mS1SXBIqxg3XmNHwb1EXq9lad+7lvLy7go6Z15qy72fLefXI6EZTBol6Vnc+7TTy98rHN9u3Dmsv/nfg6czZQLR953RrdM8+m1Oq7hfG0sbWuGuL0moYnquIiU62bFA9O+vO9ex37mdeO+bm3d3N7ssTmjCdsjU8mLJg4rRlennTmd73zV1EpFNBkM+Oy44OktKTaZCwHSPfq+2nh6fBV7Nd1nBHpXMj325fL8ZCqcn80vSWDsjEvkWcp7E6Z6tTVP8dEo8Z6qfPjvn/qkxIo6zumqeD2UGdR/3VEU3PpRskTY2Ai8dOhZPeHWc+oPEfi0wDIDw9oWY+nY5plTI1Zc1+fTsG3tJ1H8rX6L9fXnvWU1RGYGuYIdpz/x9X4f5obssUU/mG1kwW2Bwt0ZiNhzcmijL18HtDkMSLMWSprVEQWWoMjggyQPHkI0Yuh4BoakEIT1OIooy2k6NJZgaKWCRQymoAQgLHwBHHSVASuI4Y+TkEpPEdQiSIgmPBv6zmXHIl+eKJUQla0BfIDTXO0ssiSP7GtKsUJ/k+7R/Z506IgygbfMMGeYwB/pgmIg4cUw2vYDOsKoKWqUAjQSbSHsLQlV0pMFT3FjzBIAoBsQCaC0COgWhwbmZhkfv8N0hKR4WCa3AV9n8QxpPXD8QERC2QN0nTCnctl3iOpCQIggNwMEQN8ApMSGX6CKAtb1WAGISArIen5UCI0rm2kmB+Wf2Ei4AojONNnKiYBEzG5pJ1elwrQ356yhtLJ9/rAQ==') format('woff2'),
+  url('iconfont.woff?t=1594819682335') format('woff'),
+  url('iconfont.ttf?t=1594819682335') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1594819682335#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-github:before {
+  content: "\e691";
+}
+
+.icon-macos:before {
+  content: "\e6b2";
+}
+
+.icon-windows:before {
+  content: "\e579";
+}
+
