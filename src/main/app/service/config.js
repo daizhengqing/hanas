@@ -12,6 +12,6 @@ export default class Config {
 
     const res = await this.app.mainWindow.storage.setItem(key, val, isFilePath)
 
-    this.app.mainWindow.webContents.send('get_config', res)
+    evt.sender.send('get_config', res)
   }
 }

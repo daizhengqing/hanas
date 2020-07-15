@@ -2,12 +2,13 @@
   .container
     context-menu(ref="ctxMenu")
       context-menu-item(@click="onRushClick") 刷新此图
-    Scrollbar(v-if="show")
-      .item(v-for="item, index in list")
-        img(v-lazy="item" :loading="require('@/assets/image/loading.gif')")
+    Scrollbar(ref="scrollbar" v-if="show")
+      .item(v-for="item, index in list" v-contextMenu:ctxMenu="item")
+        img(:class="openFilter ? 'gray' : ''" v-lazy="item" :loading="require('@/assets/image/loading.gif')")
         span(style="color: #fff;") {{ `${index + 1}/${list.length}` }}
     .control
       span {{ title }}
+      span(@click="onOpenFilter") {{ `${openFilter ? '关闭' : '开启'}黑白滤镜` }}
       span(@click="onPreviousClick") 上一话
       span(@click="onNextClick") 下一话
       span(@click="onShowListClick") 列表
@@ -43,6 +44,10 @@ export default {
   computed: {
     title () {
       return this.$store.state.app.title
+    },
+
+    openFilter () {
+      return this.$store.state.app.config.openFilter
     }
   },
 
@@ -135,6 +140,8 @@ export default {
     onChapterSelect (item) {
       this.current = item
 
+      this.show = false
+
       this.getCharpter()
 
       this.showList = false
@@ -150,6 +157,8 @@ export default {
         return
       }
       this.current = Object.assign(this.current, this.chapterList[index - 1])
+
+      this.show = false
 
       this.getCharpter()
     },
@@ -167,6 +176,8 @@ export default {
 
       this.current = Object.assign(this.current, this.chapterList[index + 1])
 
+      this.show = false
+
       this.getCharpter()
     },
 
@@ -174,12 +185,26 @@ export default {
       this.showList = !this.showList
     },
 
-    onRushClick (url, el) {}
+    onRushClick (item) {
+      console.log(item)
+    },
+
+    onOpenFilter () {
+      this.$renderer.send('set_config', {
+        key: 'openFilter',
+        val: !this.openFilter,
+        isFilePath: false
+      })
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.gray {
+  filter: grayscale(1)
+}
+
 .container {
   position: absolute;
   top: 0;
@@ -211,7 +236,8 @@ export default {
 
 .control {
   user-select: none;
-  position: absolute;
+  // position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   text-align: right;
@@ -263,16 +289,16 @@ export default {
   }
 }
 
-/deep/ .vm-scrollbar {
-  height: calc(100%);
-}
+// /deep/ .vm-scrollbar {
+//   height: calc(100%);
+// }
 
-/deep/ .vm-scrollbar__wrap {
-  height: 100%;
-  overflow-x: hidden;
-}
+// /deep/ .vm-scrollbar__wrap {
+//   height: 100%;
+//   overflow-x: hidden;
+// }
 
-/deep/ .vm-scrollbar__view {
-  height: 100%;
-}
+// /deep/ .vm-scrollbar__view {
+//   height: 100%;
+// }
 </style>
