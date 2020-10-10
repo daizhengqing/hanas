@@ -1,10 +1,10 @@
 # HanaS
 
-![image](https://github.com/intro/home.png)
-![image](https://github.com/intro/search.png)
-![image](https://github.com/intro/shelf.png)
-![image](https://github.com/intro/chapter.png)
-![image](https://github.com/intro/reading.png)
+![image](https://github.com/daizhengqing/hanas/blob/master/intro/home.png)
+![image](https://github.com/daizhengqing/hanas/blob/master/intro/search.png)
+![image](https://github.com/daizhengqing/hanas/blob/master/intro/shelf.png)
+![image](https://github.com/daizhengqing/hanas/blob/master/intro/chapter.png)
+![image](https://github.com/daizhengqing/hanas/blob/master/intro/reading.png)
 
 
 ### TODO LIST
